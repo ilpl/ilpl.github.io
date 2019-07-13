@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Windows 10 神器]]></title>
+    <url>%2F2019%2F07%2F13%2FWindows-Software-List%2F</url>
+    <content type="text"><![CDATA[Windows 10 神器激活工具HWIDGEN]]></content>
+      <categories>
+        <category>Windows</category>
+      </categories>
+      <tags>
+        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[从Github获取日志并更新hexo]]></title>
+    <url>%2F2019%2F07%2F13%2Fupdate-hexo-for-github%2F</url>
+    <content type="text"><![CDATA[自用更新脚本1234567$ mkdir ~/github-note-temp$ cd ~/github-note-temp$ git clone https://github.com/ilpl/note$ cd note $ mv ~/*?/* &#123;&#123;$Hexo-blog-home&#125;&#125;/source/_posts/ # 去掉一层目录$ cd &#123;&#123;$Hexo-blog-home&#125;&#125;$ hexo clean &amp;&amp; hexo g -d]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Iptables Forward 限制UDP/TCP连接数量]]></title>
+    <url>%2F2019%2F03%2F23%2Fiptables-forward-udp-tcp%2F</url>
+    <content type="text"><![CDATA[iptables forward 限制UDP/TCP连接数量[TOC] TCP 限制 在转发forward链的时候,TCP连接数量大于80 就丢弃, 针对所有IP 1$ iptables -I FORWARD -p tcp -m connlimit --connlimit-above 80 -j DROP UDP 限制 UDP无法控制连接数, 只能控制每秒多少个UDP包, 一般设置为每秒3~5个比较合理. 1$ iptables -I FORWARD -p udp -m limit --limit 4/sec -j DROP 查看iptables 转发规则 查看有没有生效 1$ iptables -L FORWARD 不限制自己 给自己开个后门 可以设置IP和MAC地址 12345678910$ iptables -I FORWARD -s 192.168.1.23 -j RETURN$ iptables -I FORWARD -m mac --mac-source 00:11:22:33:44:55 -j RETURN$ iptables -I FORWARD -m mac --mac-source d8:9c:67:a7:72:39 -j DROP$ iptables -I INPUT -p tcp -m mac --mac-source d8:9c:67:a7:72:39 -m tcp -m multiport ! --dports 80,443,8080,8443 -j DROPiptables -I FORWARD -p tcp -m mac --mac-source d8:9c:67:a7:72:39 -m connlimit --connlimit-above 60 -j DROPiptables -I FORWARD -p udp -m mac --mac-source d8:9c:67:a7:72:39 -m limit --limit 3/sec -j DROP]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>OpenWRT</tag>
+        <tag>LInux</tag>
+        <tag>iptabales</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[MySQL SQL 创建数据库,添加用户,用户授权]]></title>
+    <url>%2F2019%2F03%2F16%2FMySQL-create-databases-user-grant%2F</url>
+    <content type="text"><![CDATA[mysql 创建数据库,添加用户,用户授权一、创建mysql数据库1.创建数据库语法 12--创建名称为“testdb”数据库，并设定编码集为utf8CREATE DATABASE IF NOT EXISTS testdb DEFAULT CHARSET utf8 COLLATE utf8_general_ci; 二、创建用户1.新建用户 12--创建了一个名为：test 密码为：1234 的用户create user &apos;test&apos;@&apos;localhost&apos; identified by &apos;1234&apos;; 注意：此处的”localhost”，是指该用户只能在本地登录，不能在另外一台机器上远程登录。如果想远程登录的话，将”localhost”改为”%”，表示在任何一台电脑上都可以登录。也可以指定某台机器可以远程登录。 2.查询用户 12--查询用户select user,host from mysql.user; 3.删除用户 1234--删除用户“test”drop user test@localhost ;--若创建的用户允许任何电脑登陆，删除用户如下drop user test@&apos;%&apos;; 4.更改密码 123456--方法1，密码实时更新；修改用户“test”的密码为“1122”set password for test =password(&apos;1122&apos;);--方法2，需要刷新；修改用户“test”的密码为“1234”update mysql.user set password=password(&apos;1234&apos;) where user=&apos;test&apos;--刷新flush privileges; 5.用户分配权限 12345678910-- 查看授权语句show grants;-- 授予用户test通过外网IP对数据库“testdb”的全部权限grant all privileges on &apos;testdb&apos;.* to &apos;test&apos;@&apos;%&apos; identified by &apos;1234&apos;; -- 刷新权限flush privileges; -- 授予用户“test”通过外网IP对于该数据库“testdb”中表的创建、修改、删除权限,以及表数据的增删查改权限grant create,alter,drop,select,insert,update,delete on testdb.* to test@&apos;%&apos;;-- 授权数据库以test开头grant create,alter,drop,select,insert,update,delete on `test\_%`.* to test@&apos;%&apos;; 6.查看用户权限 12--查看用户“test”show grants for test; 注意：修改完权限以后 一定要刷新服务，或者重启服务，刷新服务用：flush privileges; 外网ROOT用户登录任意主机以用户 root 和密码 mypwd 连接到 mysql 服务器 12GRANT ALL PRIVILEGES ON *.* TO &apos;root&apos;@&apos;%&apos; IDENTIFIED BY &apos;mypwd&apos; WITH GRANT OPTION;flush privileges;]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>SQL</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Log4j模板]]></title>
+    <url>%2F2019%2F03%2F13%2Flog4j-template%2F</url>
+    <content type="text"><![CDATA[filename: log4j.propetties 123456789101112131415161718# Set root category priority to INFO and its only appender to CONSOLE.#log4j.rootCategory=INFO, CONSOLE debug info warn error fatallog4j.rootCategory=debug, CONSOLE, LOGFILE#log4j.rootCategory=info# Set the enterprise logger category to FATAL and its only appender to CONSOLE.log4j.logger.org.apache.axis.enterprise=FATAL, CONSOLE# CONSOLE is set to be a ConsoleAppender using a PatternLayout.log4j.appender.CONSOLE=org.apache.log4j.ConsoleAppenderlog4j.appender.CONSOLE.layout=org.apache.log4j.PatternLayoutlog4j.appender.CONSOLE.layout.ConversionPattern=%d&#123;ISO8601&#125; %-6r [%15.15t] %-5p %30.30c %x - %m\n# LOGFILE is set to be a File appender using a PatternLayout.log4j.appender.LOGFILE=org.apache.log4j.FileAppenderlog4j.appender.LOGFILE.File=./axis.loglog4j.appender.LOGFILE.Append=truelog4j.appender.LOGFILE.layout=org.apache.log4j.PatternLayoutlog4j.appender.LOGFILE.layout.ConversionPattern=%d&#123;ISO8601&#125; %-6r [%15.15t] %-5p %30.30c %x - %m\n]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>log4j</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux Chmod 权限管理]]></title>
+    <url>%2F2019%2F03%2F10%2FLinux-chmod%2F</url>
+    <content type="text"><![CDATA[文件权限 drwxrwxr– d:是否是目录 r:对文件是指可读取内容 对目录是可以ls w:对文件是指可修改文件内容，对目录 是指可以在其中创建或删除子节点(目录或文件) x:对文件是指是否可以运行这个文件，对目录是指是否可以cd进入这个目录 属主（user）属组（group）其他用户 rwxrwxrwx 421421421 文件类型标识符 普通文件（-）目录（d）符号链接（l) 文件权限管理chmod 更变文件或目录的权限 1234$ chmod 755 file.txt$ chmod u=rwx,g=rx,o=r file.txt$ chmod 000 file.txt$ chmod 777 file.txt chown 更改所属 12$ chown root:root file.text #更改当前文件或目录的所属用户和组$ chown -R root:root dir #包括子文件的]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux for Debian 上传安装软件与包管理]]></title>
+    <url>%2F2019%2F03%2F03%2FLinux-for-Debian-Package-Management%2F</url>
+    <content type="text"><![CDATA[安装软件[TOC] lrzsz1$ yum install lrzsz rz上传sz下载 安装jdk 卸载open-JDK 123456$ java -vsersion$ rpm -qa | grep java #查询已安装的列表筛选java相关java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.i686$ rpm -e --nodeps java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.i686 # -q 卸载 --nodeps 忽略依赖$ rpm -e --nodeps java-1.7.0-openjdk-1.7.0.79-2.5.5.4.el6.i686 上传并安装JDK 通常软件安装到/usr/local目录 12$ mkdir -p /usr/local/jdk #联级创建jdk目录$ tar -xvf jdk-7u71-linux-i586.tar.gz -C /usr/local/jdk/ #解压到jdk目录 配置环境变量 ‘/etc/profile’此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行. 并从/etc/profile.d目录的配置文件中搜集shell的设置。 123456789$ vi /etc/profile$ cat&gt;/ete/profile&lt;&lt;EOF#set java environmentJAVA_HOME=/usr/local/jdk/jdk1.7.0_71CLASSPATH=.:$JAVA_HOME/lib.tools.jarPATH=$JAVA_HOME/bin:$PATHexport JAVA_HOME CLASSPATH PATHEOF # 写入文件$ source /etc/profile # 刷新配置 安装MySQL上传并解压 12345678$ tar -xvf MySQL-5.6.22-1.el6.i686.rpm-bundle.tar -C ./mysql/MySQL-shared-compat-5.6.22-1.el6.i686.rpmMySQL-server-5.6.22-1.el6.i686.rpmMySQL-client-5.6.22-1.el6.i686.rpmMySQL-devel-5.6.22-1.el6.i686.rpmMySQL-test-5.6.22-1.el6.i686.rpmMySQL-shared-5.6.22-1.el6.i686.rpmMySQL-embedded-5.6.22-1.el6.i686.rpm 将自带的mysql卸载并安装 123456$ rpm -qa | grep mysql #查询mysql-libs-5.1.73-5.el6_6.i686$ rpm -e --nodeps mysql-libs-5.1.73-5.el6_6.i686 #卸载$ rpm -ivh MySQL-server-5.6.22-1.el6.i686.rpm #安装需要安装的A RANDOM PASSWORD HAS BEEN SET FOR THE MySQL root USER !You will find that password in '/root/.mysql_secret'. 安装mysql-client 1$ rpm -ivh MySQL-client-5.6.22-1.el6.i686.rpm 启动服务 12$ service mysql startStarting MySQL. 修改MySQL密码 12345$ cat /root/.mysql_secretLaHsElVtSq02u$ mysql -u -p mysql&gt; set password=password('password');Query OK, 0 rows affected (0.00 sec) 自启动mysql 123$ chkconfig --add mysql #添加自启动$ chkconfig mysql on #开启$ chkconfig # 查询列表 mysql远程访问 123$ chkconfig --add mysql #添加自启动$ chkconfig mysql on #开启$ chkconfig # 查询列表 数据库远程访问开启 12grant all privileges on *.* to &apos;root&apos;@&apos;%&apos; identified by &apos;password&apos;;flush privileges; 关闭防火墙 12345$ /sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT$ /etc/rc.d/init.d/iptables save$ /etc/init.d/iptables status#学习阶段我们也可以直接将防火墙关闭$ service iptables stop;]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux常用网络操作]]></title>
+    <url>%2F2019%2F03%2F03%2FLinux-network-cmd%2F</url>
+    <content type="text"><![CDATA[主机名配置[TOC] hostname12$ hostname #查看主机名$ hostname name.local #修改主机名 重启无效 永久修改需要配置/etc/sysconfig/network 123$ cat /etc/sysconfig/networkNETWORKING=yesHOSTNAME=localhost.localdomain IP配置setup1$ setup #建立 伪桌面程序 设置IP ifconfig12$ ifconfig #查看IP$ ifconfig eth0(网卡设备) 192.168.1.2 #修改局域网IP 永久修改需要配置/etc/sysconfig/network-scripts/ifcfg-eth0,需要对应参数,修改前可以先启动setup编辑静态IP活的参数 网络服务管理service123456$ service network status #查看指定服务的状态$ service network stop #停止指定服务$ service network start #启动指定服务$ service network restart #重启指定服务$ service --status–all #查看系统中所有后台服务$ netstat –nltp #查看系统中网络进程的端口监听情况 防火墙设置 防火墙配置文件/etc/sysconfig/iptables 1234$ service iptables status 查看防火墙状态$ service iptables stop 关闭防火墙$ service iptables start 启动防火墙$ chkconfig iptables off 禁止防火墙自启]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Markdown 尖括号]]></title>
+    <url>%2F2019%2F03%2F03%2FMarkdown-Angle-brackets%2F</url>
+    <content type="text"><![CDATA[Markdown 尖括号 在markdown 中 &lt;&gt; 会被识别成html使用无法使用需要使用转义字符 例如 &lt;T&gt;]]></content>
+      <categories>
+        <category>Markdown</category>
+      </categories>
+      <tags>
+        <tag>Markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Redis for Java]]></title>
+    <url>%2F2019%2F03%2F02%2FRedis4Java%2F</url>
+    <content type="text"><![CDATA[Redis for JavaJedis Redis client for Java 要使用JedisJedis官网 1234Jedis jedis = new Jedis("localhost");jedis.auth("redis_password"); #设置验证密码jedis.set("foo","bar");String values = jedis.get("foo"); 可能遇到的问题远程服务器需要开启密码访问 或 关闭密码安全详情在Redis目录]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Redis 笔记]]></title>
+    <url>%2F2019%2F03%2F02%2FRedis-use%2F</url>
+    <content type="text"><![CDATA[Redis概述官网 Redis介绍 Rrdis是开源的使用ANSI C语言编写支持网络 基于内存亦可持久化的日志型key-value数据库. Redis 特点 Redis 与其他 key-value 缓存产品有有以下3个特点: Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。 Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。 Redis支持数据的备份，即master-slave模式的数据备份。 Redis 优势 性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。 丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。 原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。 丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。 Redis 下载与安装官网下载地址 下载安装1234567891011$ wget http://download.redis.io/releases/redis-5.0.3.tar.gz$ tar xzf redis-5.0.3.tar.gz$ cd redis-5.0.3$ make$ make PREFIX=/usr/local/redis install #PREFIX 指定安装的目录 安装redis-server #redis服务器redis-cli #redis命令行客户端redis-benchmark #redis性能测试工具redis-check-aof #AOF文件修复工redis-check-rdb #RDB文件检索工具$ cp redis.conf /usr/local/redis #复制配置文件 注意要先预装gcc 1$ yum install gcc #Debian 配置redis一般会设置 redis.conf编辑/usr/local/redis文件修改一下参数 12345$ vi /usr/local/redisbind 0.0.0.0 #允许任何计算机访问port #端口设置requirepass admin #设置密码为adminprotected-mode no #无密码登录yes设置为no redis-server 使用1$ ./redis-server reidis.config[config path] redis-cli 使用12$ ./redis-cli -h [host] -p [port] -a [password] $ ./redis-cli -h [host] -p [port] -a [password] [command] #交互式 Redis 数据类型和常见操作支持的数据类型 string(字符串) list(链表)set(集合)zsetsorted set(有序集合)hash`(哈希类型) Redis for Java Client在 JAVA 分类下]]></content>
+      <categories>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Java Reflec 反射]]></title>
+    <url>%2F2019%2F03%2F02%2Freflect-reflec%2F</url>
+    <content type="text"><![CDATA[Java reflec 反射[TOC] 反射介绍 反射,是一种计算机处理方式.是程序可以访问,检测修改它本身状态或行为的一种能力.JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。 JAVA反射常用的API123public final class Class&lt;T&gt;extends Objectimplements Serializable, GenericDeclaration, Type, AnnotatedElement Class 类的实例表示正在运行的 Java 应用程序中的类和接口。枚举是一种类，注释是一种接口。 在java.long.reflect包下有三个类 java.lang.reflect.AccessibleObject java.lang.reflect.Constructor&lt;T&gt; java.lang.reflect.Field java.lang.reflect.Method 反射优缺点优点： 反射提高了程序的灵活性和扩展性。 降低耦合性，提高自适应能力。 它允许程序创建和控制任何类的对象，无需提前硬编码目标类。 缺点： 性能问题：使用反射基本上是一种解释操作，用于字段和方法接入时要远慢于直接代码。因此反射机制主要应用在对灵活性和拓展性要求很高的系统框架上，普通程序不建议使用。 使用反射会模糊程序内部逻辑；程序员希望在源代码中看到程序的逻辑，反射却绕过了源代码的技术，因而会带来维护的问题，反射代码比相应的直接代码更复杂。 Class 介绍 Java 中 Class 它可以代表任意类型的类或接口类型 获得Class 获得Class 有3种方式: 123456789//对象引用.getClass();Object obj = new Object();obj.getClass();//类名或接口名直接点属性 .class 获取Object.class;//通过Class类的forname方法获取 .推荐方法Class.forname("java.lang.Object"); 为什么要获取Class对象? 获取类的成员 Constructor Field Method 对象必须先获取Class.通过Class 获取. Constructor java.lang.reflect.Constructor 构造的意思Constructor它描述的单个构造器，我们得到它就可以实例化对象 获取Constructor 返回值 方法名(形式参数) 说明 Constructor &lt;T&gt; getConstructor(Class &lt;T&gt; … parameterTypes) 返回一个 Constructor 对象，它反映此 Class 对象所表示的类的指定公共构造方法。 Constructor &lt;T&gt; [] getConstructors() 返回一个包含某些 Constructor 对象的数组，这些对象反映此 Class 对象所表示的类的所有公共构造方法。 Constructor &lt;T&gt; getDeclaredConstructor(Class &lt;T&gt; … parameterTypes) 返回一个 Constructor 对象，该对象反映此 Class 对象所表示的类或接口的指定构造方法。 Constructor &lt;T&gt;[] getDeclaredClasses() 返回 Class 对象的一个数组，这些对象反映声明为此 Class 对象所表示的类的成员的所有类和接口。 12345678910111213141516//获取public修饰的构造方法getConstructorgetConstructors//获取所有构造方法包括私有getDeclaredConstructorgetDeclaredClasses//得到构造器后就可以实例化对象@param 使用此 Constructor 对象表示的构造方法来创建该构造方法的声明类的新实例，并用指定的初始化参数初始化该实例。public T newInstance(Object... initargs);//如果不是public 需要使用取消检查//将此对象的 accessible 标志设置为指示的布尔值public void setAccessible(boolean flag); // constructor.setAccessible(true); Field java.lang.reflect.Field 它描述的属性对象 获取Field更获取Constructor类似 对Field进行赋值 返回值 方法名(形式参数) 说明 void set(Object obj, Object value) 将指定对象变量上此 Field 对象表示的字段设置为指定的新值。 void setBoolean(Object obj, boolean z) 将字段的值设置为指定对象上的一个 boolean 值。 void setByte(Object obj, byte b) 将字段的值设置为指定对象上的一个 byte 值。 void setChar(Object obj, char c) 将字段的值设置为指定对象上的一个 char 值。 void setDouble(Object obj, double d) 将字段的值设置为指定对象上的一个 double 值。 void setFloat(Object obj, float f) 将字段的值设置为指定对象上的一个 float 值。 void setInt(Object obj, int i) 将字段的值设置为指定对象上的一个 int 值。 void setLong(Object obj, long l) 将字段的值设置为指定对象上的一个 long 值。 void setShort(Object obj, short s) 将字段的值设置为指定对象上的一个 short 值。 对Field取值 返回值 方法名(形式参数) 说明 Object get(Object obj) 返回指定对象上此 Field 表示的字段的值。 也可以使用get加数据类型的方式 例如 getInt(); 如set实例. Method (重点) java.lang.reflect.Method 它描述的是类或接口中的方法 获取Method 对象]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux 用户和组]]></title>
+    <url>%2F2019%2F03%2F02%2FLinux-user-and-group%2F</url>
+    <content type="text"><![CDATA[用户useradd12$ useradd test 添加test用户$ useradd test -d /home/test 指定为用户home目录 passwd1$ passwd test 为test设置密码 userdel12$ userdel test$ userdel -r test #删除用户和home目录 usermod 更改用户名 12345$ usermod -l old_name new_name$ usermod -g 用户组 用户名 #强制修改用户所在组$ usermod -a -G 用户组 用户名 #把某个用户添加进某个组 组 当在创建一个新用户user 的时候,若没有指定用户组,那将会创建一个和改用户名同名的私有组. groupadd12$ groupadd public #创建一个名为public 的用户组$ groupadd username -g public #创建用户username指定组为public groupdel1$ groupdel public #删除用户组,删除用户组前必须清空用户组 groupmod 更改组名 1$ groupmod -n old_groupname new_groupname]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux Find 命令]]></title>
+    <url>%2F2019%2F03%2F01%2FLinux-find%2F</url>
+    <content type="text"><![CDATA[find 指令用于查找符合条件的文件 1find / -name &quot;ins*&quot; #从/目录下查找以ins开头的文件]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux Tar 解压缩]]></title>
+    <url>%2F2019%2F03%2F01%2FLInux-tar%2F</url>
+    <content type="text"><![CDATA[tar 将许多文件一起保存至一个单独的磁带或磁盘归档，并能从归档中单独还原所需文件。-c：创建一个新tar文件-v：显示运行过程的信息-f：指定文件名-z：调用gzip压缩命令进行压缩-t：查看压缩文件的内容-x：解开tar文件 打包1tar –cvf xxx.tar [目录] 打包并且压缩1tar –zcvf xxx.tar.gz [目录] 解压1tar -xvf xxx.tar.gz -C [目录]]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[非标准端口DNS(5353端口,UDP/TCP,港澳台)🔍]]></title>
+    <url>%2F2018%2F08%2F17%2Fpublic-DNS-5353-list%2F</url>
+    <content type="text"><![CDATA[前言国内DNS查询海外域名总有点BUG😊所以把平常使用的一些DNS 分享出来 下方DNS均支持 53,5353(UDP/TCP)使用非标准DNS能解决海外部分网站打不开的问题 DNS国内无污染DNSqieyz DNS123.207.22.79 无污染DNS111.230.37.44 去广告DNS 中科大防污染DNS202.141.162.123 中国电信202.38.93.153 教育网202.141.176.93 中国移动 海外公共DNSOpenDNS (推荐):支持5353,443端口208.67.222.222208.67.220.220 AdGuard DNS:使用以下服务器拦截广告，跟踪和钓鱼176.103.130.130176.103.130.1312a00:5a60::ad1:0ff2a00:5a60::ad2:0ff 默认 + 拦截成人网站 + 安全搜索176.103.130.132176.103.130.1342a00:5a60::bad1:0ff2a00:5a60::bad2:0ff opennic DNS5353 仅支持TCP185.121.177.177169.239.202.2022a05:dfc7:5::532a05:dfc7:5::5353 更多国家和地区(港澳台)(部分支持5353)自取网站https://dns.d0wn.biz/https://dnscrypt.info/https://www.publicdns.xyz/ (推荐) 测试208.67.222.222 替换成你需要测试的域名5353 替换成你需要测试的端口 DNS TCPLinux 平台 1$ dig www.baidu.com @208.67.222.222 -p 5353 +tcp Windows 平台默认nslookup是只支持53端口,所以要先端口转发再进行DNS查询.要在管理员权限下进行.自带端口转发只支持TCP,所以查询的都是TCP,UDP非53端口暂时我不知道怎么弄 12$ netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=53 connectaddress=208.67.222.222 connectport=5353$ nslookup -vc www.baidu.com 127.0.0.1 使用完TCPDNS查询记得取消端口转发 1$ netsh interface portproxy delete v4tov4 listenaddress=0.0.0.0 listenport=53 DNS UDPLinux 平台 1$ dig www.baidu.com @208.67.222.222 -p 5353 Windows 平台 1$ nslookup www.baidu.com 208.67.222.222]]></content>
+      <categories>
+        <category>IT</category>
+        <category>DNS</category>
+      </categories>
+      <tags>
+        <tag>DNS 无污染DNS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2018%2F08%2F11%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+      <categories>
+        <category>hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+</search>
