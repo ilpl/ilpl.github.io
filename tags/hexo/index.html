@@ -827,6 +827,39 @@
   
 
   
+  
+
+<link rel="stylesheet" href="//api.fooleap.org/disqus/iDisqus.min.css?v=20190419">
+
+
+
+<script>
+  function initialDsq() {
+    var disq = new iDisqus('comments', {
+        forum: 'ilpl',
+        site: 'https://ilpl.me',
+        api: 'https://file.ilpl.me/api/disqus',
+        mode: 2,
+        badge: '博主',
+        timeout: 3000,
+        init: true,
+        emojiPreview: true,
+    });
+    disq.count();
+  }
+
+  function loadDsqAPI() {
+    var d = document, s = d.createElement('script');
+    s.src = '//api.fooleap.org/disqus/iDisqus.min.js?v=20190419';
+    s.onload = initialDsq;
+    (d.head || d.body).appendChild(s);
+  }
+  
+  window.addEventListener('load', loadDsqAPI, false);
+</script>
+
+
+
 
 
 
