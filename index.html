@@ -2606,8 +2606,12 @@ Jedis jedis = new Jedis("localhost");jedis.auth("redis_password"); #设置验证
   
   
 
-<link rel="stylesheet" href="//api.fooleap.org/disqus/iDisqus.min.css?v=20190419">
+  
 
+<link rel="stylesheet" href="/disqus/iDisqus.min.css">
+
+
+  
 
 
 <script>
@@ -2627,7 +2631,7 @@ Jedis jedis = new Jedis("localhost");jedis.auth("redis_password"); #设置验证
 
   function loadDsqAPI() {
     var d = document, s = d.createElement('script');
-    s.src = '//api.fooleap.org/disqus/iDisqus.min.js?v=20190419';
+    s.src = '/disqus/iDisqus.min.js';
     s.onload = initialDsq;
     (d.head || d.body).appendChild(s);
   }
