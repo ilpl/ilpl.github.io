@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title><![CDATA[Windows 10 神器]]></title>
-    <url>%2F2019%2F07%2F13%2FWindows-Software-List%2F</url>
+    <url>%2F2019%2F07%2F16%2FWindows-Software-List%2F</url>
     <content type="text"><![CDATA[Windows 10 神器激活工具HWIDGEN]]></content>
       <categories>
         <category>Windows</category>
@@ -14,7 +14,7 @@
   <entry>
     <title><![CDATA[从Github获取日志并更新hexo]]></title>
     <url>%2F2019%2F07%2F13%2Fupdate-hexo-for-github%2F</url>
-    <content type="text"><![CDATA[自用更新脚本1234567$ mkdir ~/github-note-temp$ cd ~/github-note-temp$ git clone https://github.com/ilpl/note$ cd note $ mv ~/*?/* &#123;&#123;$Hexo-blog-home&#125;&#125;/source/_posts/ # 去掉一层目录$ cd &#123;&#123;$Hexo-blog-home&#125;&#125;$ hexo clean &amp;&amp; hexo g -d]]></content>
+    <content type="text"><![CDATA[自用更新脚本1234567$ mkdir ~/github-note-temp$ cd ~/github-note-temp$ git clone git@github.com:ilpl/note.git$ cd note $ mv ~/*?/* &#123;&#123;$Hexo-blog-home&#125;&#125;/source/_posts/ # 去掉一层目录$ cd &#123;&#123;$Hexo-blog-home&#125;&#125;$ hexo clean &amp;&amp; hexo g -d]]></content>
       <categories>
         <category>hexo</category>
       </categories>
@@ -177,11 +177,13 @@
     <url>%2F2018%2F08%2F17%2Fpublic-DNS-5353-list%2F</url>
     <content type="text"><![CDATA[前言国内DNS查询海外域名总有点BUG😊所以把平常使用的一些DNS 分享出来 下方DNS均支持 53,5353(UDP/TCP)使用非标准DNS能解决海外部分网站打不开的问题 DNS国内无污染DNSqieyz DNS123.207.22.79 无污染DNS111.230.37.44 去广告DNS 中科大防污染DNS202.141.162.123 中国电信202.38.93.153 教育网202.141.176.93 中国移动 海外公共DNSOpenDNS (推荐):支持5353,443端口208.67.222.222208.67.220.220 AdGuard DNS:使用以下服务器拦截广告，跟踪和钓鱼176.103.130.130176.103.130.1312a00:5a60::ad1:0ff2a00:5a60::ad2:0ff 默认 + 拦截成人网站 + 安全搜索176.103.130.132176.103.130.1342a00:5a60::bad1:0ff2a00:5a60::bad2:0ff opennic DNS5353 仅支持TCP185.121.177.177169.239.202.2022a05:dfc7:5::532a05:dfc7:5::5353 更多国家和地区(港澳台)(部分支持5353)自取网站https://dns.d0wn.biz/https://dnscrypt.info/https://www.publicdns.xyz/ (推荐) 测试208.67.222.222 替换成你需要测试的域名5353 替换成你需要测试的端口 DNS TCPLinux 平台 1$ dig www.baidu.com @208.67.222.222 -p 5353 +tcp Windows 平台默认nslookup是只支持53端口,所以要先端口转发再进行DNS查询.要在管理员权限下进行.自带端口转发只支持TCP,所以查询的都是TCP,UDP非53端口暂时我不知道怎么弄 12$ netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=53 connectaddress=208.67.222.222 connectport=5353$ nslookup -vc www.baidu.com 127.0.0.1 使用完TCPDNS查询记得取消端口转发 1$ netsh interface portproxy delete v4tov4 listenaddress=0.0.0.0 listenport=53 DNS UDPLinux 平台 1$ dig www.baidu.com @208.67.222.222 -p 5353 Windows 平台 1$ nslookup www.baidu.com 208.67.222.222]]></content>
       <categories>
-        <category>IT</category>
         <category>DNS</category>
       </categories>
       <tags>
-        <tag>DNS 无污染DNS</tag>
+        <tag>DNS</tag>
+        <tag>无污染DNS</tag>
+        <tag>5353</tag>
+        <tag>TCP DNS</tag>
       </tags>
   </entry>
   <entry>
