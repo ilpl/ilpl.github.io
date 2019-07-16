@@ -408,7 +408,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ilpl.me/2019/03/02/reflect-reflec/">
+    <link itemprop="mainEntityOfPage" href="https://ilpl.me/2019/03/02/Redis4Java/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="iLPL">
@@ -428,7 +428,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/03/02/reflect-reflec/" class="post-title-link" itemprop="url">Java Reflec 反射</a>
+                <a href="/2019/03/02/Redis4Java/" class="post-title-link" itemprop="url">Redis for Java</a>
               
             
           </h2>
@@ -468,7 +468,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-16 12:34:48" itemprop="dateModified" datetime="2019-07-16T12:34:48+08:00">2019-07-16</time>
+                <time title="修改时间：2019-07-16 15:36:26" itemprop="dateModified" datetime="2019-07-16T15:36:26+08:00">2019-07-16</time>
               </span>
             
           
@@ -525,15 +525,205 @@
         
           
             <p>
-              Java reflec 反射[TOC]
-反射介绍
-反射,是一种计算机处理方式.是程序可以访问,检测修改它本身状态或行为的一种能力.JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功
+              Redis for JavaJedis
+Redis client for Java 要使用JedisJedis官网
+
+Jedis jedis = new Jedis("localhost");jedis.auth("redis_password"); #设置验证密码jedis.set("foo","
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2019/03/02/reflect-reflec/#more" rel="contents">
+              <a class="btn" href="/2019/03/02/Redis4Java/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://ilpl.me/2019/03/02/Linux-user-and-group/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="iLPL">
+      <meta itemprop="description" content="留住青春。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iLPL's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/02/Linux-user-and-group/" class="post-title-link" itemprop="url">Linux 用户和组</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-02 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-02T00:00:00+08:00">2019-03-02</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-16 15:36:26" itemprop="dateModified" datetime="2019-07-16T15:36:26+08:00">2019-07-16</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              用户useradd$ useradd test 添加test用户$ useradd test -d /home/test 指定为用户home目录
+
+passwd$ passwd test 为test设置密码
+
+userdel$ userdel test$ userdel -r test #删除用户和
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/02/Linux-user-and-group/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -655,7 +845,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-16 12:34:48" itemprop="dateModified" datetime="2019-07-16T12:34:48+08:00">2019-07-16</time>
+                <time title="修改时间：2019-07-16 15:36:26" itemprop="dateModified" datetime="2019-07-16T15:36:26+08:00">2019-07-16</time>
               </span>
             
           
@@ -787,7 +977,7 @@ Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://ilpl.me/2019/03/02/Linux-user-and-group/">
+    <link itemprop="mainEntityOfPage" href="https://ilpl.me/2019/03/02/reflect-reflec/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="iLPL">
@@ -807,7 +997,7 @@ Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/03/02/Linux-user-and-group/" class="post-title-link" itemprop="url">Linux 用户和组</a>
+                <a href="/2019/03/02/reflect-reflec/" class="post-title-link" itemprop="url">Java Reflec 反射</a>
               
             
           </h2>
@@ -847,7 +1037,7 @@ Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-16 12:34:48" itemprop="dateModified" datetime="2019-07-16T12:34:48+08:00">2019-07-16</time>
+                <time title="修改时间：2019-07-16 15:36:26" itemprop="dateModified" datetime="2019-07-16T15:36:26+08:00">2019-07-16</time>
               </span>
             
           
@@ -861,7 +1051,7 @@ Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
 
                 
                 
@@ -904,17 +1094,15 @@ Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，
         
           
             <p>
-              用户useradd$ useradd test 添加test用户$ useradd test -d /home/test 指定为用户home目录
-
-passwd$ passwd test 为test设置密码
-
-userdel$ userdel test$ userdel -r test #删除用户和
+              Java reflec 反射[TOC]
+反射介绍
+反射,是一种计算机处理方式.是程序可以访问,检测修改它本身状态或行为的一种能力.JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2019/03/02/Linux-user-and-group/#more" rel="contents">
+              <a class="btn" href="/2019/03/02/reflect-reflec/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1036,7 +1224,7 @@ userdel$ userdel test$ userdel -r test #删除用户和
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-16 12:34:48" itemprop="dateModified" datetime="2019-07-16T12:34:48+08:00">2019-07-16</time>
+                <time title="修改时间：2019-07-16 15:36:26" itemprop="dateModified" datetime="2019-07-16T15:36:26+08:00">2019-07-16</time>
               </span>
             
           
@@ -1224,7 +1412,7 @@ find / -name &quot;ins*&quot; #从/目录下查找以ins开头的文件
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-16 12:34:48" itemprop="dateModified" datetime="2019-07-16T12:34:48+08:00">2019-07-16</time>
+                <time title="修改时间：2019-07-16 15:36:26" itemprop="dateModified" datetime="2019-07-16T15:36:26+08:00">2019-07-16</time>
               </span>
             
           
@@ -1414,7 +1602,7 @@ find / -name &quot;ins*&quot; #从/目录下查找以ins开头的文件
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-16 12:34:48" itemprop="dateModified" datetime="2019-07-16T12:34:48+08:00">2019-07-16</time>
+                <time title="修改时间：2019-07-16 15:36:26" itemprop="dateModified" datetime="2019-07-16T15:36:26+08:00">2019-07-16</time>
               </span>
             
           
@@ -1603,7 +1791,7 @@ DNS国内无污染DNSqieyz DNS123.207.22.79  无污染DNS111.230.37.44  去广�
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-16 12:34:48" itemprop="dateModified" datetime="2019-07-16T12:34:48+08:00">2019-07-16</time>
+                <time title="修改时间：2019-07-16 15:36:26" itemprop="dateModified" datetime="2019-07-16T15:36:26+08:00">2019-07-16</time>
               </span>
             
           
@@ -1761,7 +1949,7 @@ DNS国内无污染DNSqieyz DNS123.207.22.79  无污染DNS111.230.37.44  去广�
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1794,7 +1982,9 @@ DNS国内无污染DNSqieyz DNS123.207.22.79  无污染DNS111.230.37.44  去广�
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1847,7 +2037,9 @@ DNS国内无污染DNSqieyz DNS123.207.22.79  无污染DNS111.230.37.44  去广�
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

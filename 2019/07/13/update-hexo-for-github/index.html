@@ -114,18 +114,18 @@
 
 
 
-  <meta name="description" content="自用更新脚本12345678#!/bin/shrm -rf ~/github-note-tempmkdir ~/github-note-tempcd ~/github-note-tempgit clone git@github.com:ilpl/note.git .cp -rf *?/* ~/blog/source/_posts/ # 去掉一层目录cd ~/bloghexo clean &amp;amp;">
+  <meta name="description" content="自用更新脚本12345678#!/bin/shrm -rf ~/github-note-tempmkdir ~/github-note-tempcd ~/github-note-tempgit clone git@github.com:ilpl/note.git . #拉去到当前目录cp -rf *?/* ~/blog/source/_posts/ # 去掉一层目录cd ~/bloghexo cl">
 <meta name="keywords" content="hexo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从Github获取日志并更新hexo">
 <meta property="og:url" content="https://ilpl.me/2019/07/13/update-hexo-for-github/index.html">
 <meta property="og:site_name" content="iLPL&#39;s Blog">
-<meta property="og:description" content="自用更新脚本12345678#!/bin/shrm -rf ~/github-note-tempmkdir ~/github-note-tempcd ~/github-note-tempgit clone git@github.com:ilpl/note.git .cp -rf *?/* ~/blog/source/_posts/ # 去掉一层目录cd ~/bloghexo clean &amp;amp;">
+<meta property="og:description" content="自用更新脚本12345678#!/bin/shrm -rf ~/github-note-tempmkdir ~/github-note-tempcd ~/github-note-tempgit clone git@github.com:ilpl/note.git . #拉去到当前目录cp -rf *?/* ~/blog/source/_posts/ # 去掉一层目录cd ~/bloghexo cl">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-16T04:34:48.133Z">
+<meta property="og:updated_time" content="2019-07-16T07:36:26.308Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从Github获取日志并更新hexo">
-<meta name="twitter:description" content="自用更新脚本12345678#!/bin/shrm -rf ~/github-note-tempmkdir ~/github-note-tempcd ~/github-note-tempgit clone git@github.com:ilpl/note.git .cp -rf *?/* ~/blog/source/_posts/ # 去掉一层目录cd ~/bloghexo clean &amp;amp;">
+<meta name="twitter:description" content="自用更新脚本12345678#!/bin/shrm -rf ~/github-note-tempmkdir ~/github-note-tempcd ~/github-note-tempgit clone git@github.com:ilpl/note.git . #拉去到当前目录cp -rf *?/* ~/blog/source/_posts/ # 去掉一层目录cd ~/bloghexo cl">
 
 
 
@@ -466,7 +466,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-16 12:34:48" itemprop="dateModified" datetime="2019-07-16T12:34:48+08:00">2019-07-16</time>
+                <time title="修改时间：2019-07-16 15:36:26" itemprop="dateModified" datetime="2019-07-16T15:36:26+08:00">2019-07-16</time>
               </span>
             
           
@@ -520,7 +520,7 @@
       
 
       
-        <h3 id="自用更新脚本"><a href="#自用更新脚本" class="headerlink" title="自用更新脚本"></a>自用更新脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">rm -rf ~/github-note-temp</span><br><span class="line">mkdir ~/github-note-temp</span><br><span class="line"><span class="built_in">cd</span> ~/github-note-temp</span><br><span class="line">git <span class="built_in">clone</span> git@github.com:ilpl/note.git .</span><br><span class="line">cp -rf *?/* ~/blog/<span class="built_in">source</span>/_posts/ <span class="comment"># 去掉一层目录</span></span><br><span class="line"><span class="built_in">cd</span> ~/blog</span><br><span class="line">hexo clean &amp;&amp; hexo g -d</span><br></pre></td></tr></table></figure>
+        <h3 id="自用更新脚本"><a href="#自用更新脚本" class="headerlink" title="自用更新脚本"></a>自用更新脚本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">rm -rf ~/github-note-temp</span><br><span class="line">mkdir ~/github-note-temp</span><br><span class="line"><span class="built_in">cd</span> ~/github-note-temp</span><br><span class="line">git <span class="built_in">clone</span> git@github.com:ilpl/note.git . <span class="comment">#拉去到当前目录</span></span><br><span class="line">cp -rf *?/* ~/blog/<span class="built_in">source</span>/_posts/ <span class="comment"># 去掉一层目录</span></span><br><span class="line"><span class="built_in">cd</span> ~/blog</span><br><span class="line">hexo clean &amp;&amp; hexo g -d</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -617,8 +617,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/07/16/Windows-Software-List/" rel="prev" title="Windows 10 神器">
-                Windows 10 神器 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/07/16/hadoop笔记/" rel="prev" title="Hadoop 笔记">
+                Hadoop 笔记 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -694,7 +694,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -727,7 +727,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -780,7 +782,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">18</span>
+                      
+                    
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
