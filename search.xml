@@ -118,17 +118,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Redis 笔记]]></title>
-    <url>%2F2019%2F03%2F02%2FRedis-use%2F</url>
-    <content type="text"><![CDATA[Redis概述官网 Redis介绍 Rrdis是开源的使用ANSI C语言编写支持网络 基于内存亦可持久化的日志型key-value数据库. Redis 特点 Redis 与其他 key-value 缓存产品有有以下3个特点: Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。 Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。 Redis支持数据的备份，即master-slave模式的数据备份。 Redis 优势 性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。 丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。 原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。 丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。 Redis 下载与安装官网下载地址 下载安装1234567891011$ wget http://download.redis.io/releases/redis-5.0.3.tar.gz$ tar xzf redis-5.0.3.tar.gz$ cd redis-5.0.3$ make$ make PREFIX=/usr/local/redis install #PREFIX 指定安装的目录 安装redis-server #redis服务器redis-cli #redis命令行客户端redis-benchmark #redis性能测试工具redis-check-aof #AOF文件修复工redis-check-rdb #RDB文件检索工具$ cp redis.conf /usr/local/redis #复制配置文件 注意要先预装gcc 1$ yum install gcc #Debian 配置redis一般会设置 redis.conf编辑/usr/local/redis文件修改一下参数 12345$ vi /usr/local/redisbind 0.0.0.0 #允许任何计算机访问port #端口设置requirepass admin #设置密码为adminprotected-mode no #无密码登录yes设置为no redis-server 使用1$ ./redis-server reidis.config[config path] redis-cli 使用12$ ./redis-cli -h [host] -p [port] -a [password] $ ./redis-cli -h [host] -p [port] -a [password] [command] #交互式 Redis 数据类型和常见操作支持的数据类型 string(字符串) list(链表)set(集合)zsetsorted set(有序集合)hash`(哈希类型) Redis for Java Client在 JAVA 分类下]]></content>
-      <categories>
-        <category>Redis</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Java Reflec 反射]]></title>
     <url>%2F2019%2F03%2F02%2Freflect-reflec%2F</url>
     <content type="text"><![CDATA[Java reflec 反射[TOC] 反射介绍 反射,是一种计算机处理方式.是程序可以访问,检测修改它本身状态或行为的一种能力.JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。 JAVA反射常用的API123public final class Class&lt;T&gt;extends Objectimplements Serializable, GenericDeclaration, Type, AnnotatedElement Class 类的实例表示正在运行的 Java 应用程序中的类和接口。枚举是一种类，注释是一种接口。 在java.long.reflect包下有三个类 java.lang.reflect.AccessibleObject java.lang.reflect.Constructor&lt;T&gt; java.lang.reflect.Field java.lang.reflect.Method 反射优缺点优点： 反射提高了程序的灵活性和扩展性。 降低耦合性，提高自适应能力。 它允许程序创建和控制任何类的对象，无需提前硬编码目标类。 缺点： 性能问题：使用反射基本上是一种解释操作，用于字段和方法接入时要远慢于直接代码。因此反射机制主要应用在对灵活性和拓展性要求很高的系统框架上，普通程序不建议使用。 使用反射会模糊程序内部逻辑；程序员希望在源代码中看到程序的逻辑，反射却绕过了源代码的技术，因而会带来维护的问题，反射代码比相应的直接代码更复杂。 Class 介绍 Java 中 Class 它可以代表任意类型的类或接口类型 获得Class 获得Class 有3种方式: 123456789//对象引用.getClass();Object obj = new Object();obj.getClass();//类名或接口名直接点属性 .class 获取Object.class;//通过Class类的forname方法获取 .推荐方法Class.forname("java.lang.Object"); 为什么要获取Class对象? 获取类的成员 Constructor Field Method 对象必须先获取Class.通过Class 获取. Constructor java.lang.reflect.Constructor 构造的意思Constructor它描述的单个构造器，我们得到它就可以实例化对象 获取Constructor 返回值 方法名(形式参数) 说明 Constructor &lt;T&gt; getConstructor(Class &lt;T&gt; … parameterTypes) 返回一个 Constructor 对象，它反映此 Class 对象所表示的类的指定公共构造方法。 Constructor &lt;T&gt; [] getConstructors() 返回一个包含某些 Constructor 对象的数组，这些对象反映此 Class 对象所表示的类的所有公共构造方法。 Constructor &lt;T&gt; getDeclaredConstructor(Class &lt;T&gt; … parameterTypes) 返回一个 Constructor 对象，该对象反映此 Class 对象所表示的类或接口的指定构造方法。 Constructor &lt;T&gt;[] getDeclaredClasses() 返回 Class 对象的一个数组，这些对象反映声明为此 Class 对象所表示的类的成员的所有类和接口。 12345678910111213141516//获取public修饰的构造方法getConstructorgetConstructors//获取所有构造方法包括私有getDeclaredConstructorgetDeclaredClasses//得到构造器后就可以实例化对象@param 使用此 Constructor 对象表示的构造方法来创建该构造方法的声明类的新实例，并用指定的初始化参数初始化该实例。public T newInstance(Object... initargs);//如果不是public 需要使用取消检查//将此对象的 accessible 标志设置为指示的布尔值public void setAccessible(boolean flag); // constructor.setAccessible(true); Field java.lang.reflect.Field 它描述的属性对象 获取Field更获取Constructor类似 对Field进行赋值 返回值 方法名(形式参数) 说明 void set(Object obj, Object value) 将指定对象变量上此 Field 对象表示的字段设置为指定的新值。 void setBoolean(Object obj, boolean z) 将字段的值设置为指定对象上的一个 boolean 值。 void setByte(Object obj, byte b) 将字段的值设置为指定对象上的一个 byte 值。 void setChar(Object obj, char c) 将字段的值设置为指定对象上的一个 char 值。 void setDouble(Object obj, double d) 将字段的值设置为指定对象上的一个 double 值。 void setFloat(Object obj, float f) 将字段的值设置为指定对象上的一个 float 值。 void setInt(Object obj, int i) 将字段的值设置为指定对象上的一个 int 值。 void setLong(Object obj, long l) 将字段的值设置为指定对象上的一个 long 值。 void setShort(Object obj, short s) 将字段的值设置为指定对象上的一个 short 值。 对Field取值 返回值 方法名(形式参数) 说明 Object get(Object obj) 返回指定对象上此 Field 表示的字段的值。 也可以使用get加数据类型的方式 例如 getInt(); 如set实例. Method (重点) java.lang.reflect.Method 它描述的是类或接口中的方法 获取Method 对象]]></content>
@@ -137,6 +126,17 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Redis 笔记]]></title>
+    <url>%2F2019%2F03%2F02%2FRedis-use%2F</url>
+    <content type="text"><![CDATA[Redis概述官网 Redis介绍 Rrdis是开源的使用ANSI C语言编写支持网络 基于内存亦可持久化的日志型key-value数据库. Redis 特点 Redis 与其他 key-value 缓存产品有有以下3个特点: Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。 Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。 Redis支持数据的备份，即master-slave模式的数据备份。 Redis 优势 性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。 丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。 原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。 丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。 Redis 下载与安装官网下载地址 下载安装1234567891011$ wget http://download.redis.io/releases/redis-5.0.3.tar.gz$ tar xzf redis-5.0.3.tar.gz$ cd redis-5.0.3$ make$ make PREFIX=/usr/local/redis install #PREFIX 指定安装的目录 安装redis-server #redis服务器redis-cli #redis命令行客户端redis-benchmark #redis性能测试工具redis-check-aof #AOF文件修复工redis-check-rdb #RDB文件检索工具$ cp redis.conf /usr/local/redis #复制配置文件 注意要先预装gcc 1$ yum install gcc #Debian 配置redis一般会设置 redis.conf编辑/usr/local/redis文件修改一下参数 12345$ vi /usr/local/redisbind 0.0.0.0 #允许任何计算机访问port #端口设置requirepass admin #设置密码为adminprotected-mode no #无密码登录yes设置为no redis-server 使用1$ ./redis-server reidis.config[config path] redis-cli 使用12$ ./redis-cli -h [host] -p [port] -a [password] $ ./redis-cli -h [host] -p [port] -a [password] [command] #交互式 Redis 数据类型和常见操作支持的数据类型 string(字符串) list(链表)set(集合)zsetsorted set(有序集合)hash`(哈希类型) Redis for Java Client在 JAVA 分类下]]></content>
+      <categories>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>

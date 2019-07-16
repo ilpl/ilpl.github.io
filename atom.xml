@@ -289,31 +289,6 @@
   </entry>
   
   <entry>
-    <title>Redis 笔记</title>
-    <link href="https://ilpl.me/2019/03/02/Redis-use/"/>
-    <id>https://ilpl.me/2019/03/02/Redis-use/</id>
-    <published>2019-03-01T16:00:00.000Z</published>
-    <updated>2019-07-13T13:50:40.407Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Redis概述"><a href="#Redis概述" class="headerlink" title="Redis概述"></a>Redis概述</h1><p><a href="https://redis.io/" target="_blank" rel="noopener">官网</a></p><h2 id="Redis介绍"><a href="#Redis介绍" class="headerlink" title="Redis介绍"></a>Redis介绍</h2><blockquote><p>Rrdis是开源的使用ANSI C语言编写支持网络 基于内存亦可持久化的日志型key-value数据库.</p></blockquote><h2 id="Redis-特点"><a href="#Redis-特点" class="headerlink" title="Redis 特点"></a>Redis 特点</h2><blockquote><p>Redis 与其他 key-value 缓存产品有有以下3个特点:</p><ol><li>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li><li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li><li>Redis支持数据的备份，即master-slave模式的数据备份。</li></ol></blockquote><h2 id="Redis-优势"><a href="#Redis-优势" class="headerlink" title="Redis 优势"></a>Redis 优势</h2><ol><li>性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。</li><li>丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。</li><li>原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。</li><li>丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。</li></ol><h1 id="Redis-下载与安装"><a href="#Redis-下载与安装" class="headerlink" title="Redis 下载与安装"></a>Redis 下载与安装</h1><p><a href="https://redis.io/download" target="_blank" rel="noopener">官网下载地址</a></p><h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ wget http://download.redis.io/releases/redis-5.0.3.tar.gz</span><br><span class="line">$ tar xzf redis-5.0.3.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> redis-5.0.3</span><br><span class="line">$ make</span><br><span class="line">$ make PREFIX=/usr/<span class="built_in">local</span>/redis install <span class="comment">#PREFIX 指定安装的目录 安装</span></span><br><span class="line">redis-server    <span class="comment">#redis服务器</span></span><br><span class="line">redis-cli       <span class="comment">#redis命令行客户端</span></span><br><span class="line">redis-benchmark <span class="comment">#redis性能测试工具</span></span><br><span class="line">redis-check-aof <span class="comment">#AOF文件修复工</span></span><br><span class="line">redis-check-rdb <span class="comment">#RDB文件检索工具</span></span><br><span class="line">$ cp redis.conf /usr/<span class="built_in">local</span>/redis <span class="comment">#复制配置文件</span></span><br></pre></td></tr></table></figure><p>注意要先预装<code>gcc</code></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install gcc <span class="comment">#Debian</span></span><br></pre></td></tr></table></figure><h2 id="配置redis"><a href="#配置redis" class="headerlink" title="配置redis"></a>配置redis</h2><p>一般会设置 redis.conf<br>编辑<code>/usr/local/redis</code>文件修改一下参数</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/<span class="built_in">local</span>/redis</span><br><span class="line"><span class="built_in">bind</span> 0.0.0.0 <span class="comment">#允许任何计算机访问</span></span><br><span class="line">port <span class="comment">#端口设置</span></span><br><span class="line">requirepass admin <span class="comment">#设置密码为admin</span></span><br><span class="line">protected-mode no <span class="comment">#无密码登录yes设置为no</span></span><br></pre></td></tr></table></figure><h2 id="redis-server-使用"><a href="#redis-server-使用" class="headerlink" title="redis-server 使用"></a>redis-server 使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-server reidis.config[config path]</span><br></pre></td></tr></table></figure><h2 id="redis-cli-使用"><a href="#redis-cli-使用" class="headerlink" title="redis-cli 使用"></a>redis-cli 使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-cli -h [host] -p [port] -a [password] </span><br><span class="line">$ ./redis-cli -h [host] -p [port] -a [password] [<span class="built_in">command</span>] <span class="comment">#交互式</span></span><br></pre></td></tr></table></figure><h1 id="Redis-数据类型和常见操作"><a href="#Redis-数据类型和常见操作" class="headerlink" title="Redis 数据类型和常见操作"></a>Redis 数据类型和常见操作</h1><p>支持的数据类型 <code>string</code>(字符串)  list<code>(链表)</code>set<code>(集合)</code>zset<code></code>sorted set<code>(有序集合)</code>hash`(哈希类型)</p><h1 id="Redis-for-Java-Client"><a href="#Redis-for-Java-Client" class="headerlink" title="Redis for Java Client"></a>Redis for Java Client</h1><p>在 JAVA 分类下</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;Redis概述&quot;&gt;&lt;a href=&quot;#Redis概述&quot; class=&quot;headerlink&quot; title=&quot;Redis概述&quot;&gt;&lt;/a&gt;Redis概述&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://redis.io/&quot; target=&quot;_blank&quot; rel=&quot;n
-      
-    
-    </summary>
-    
-      <category term="Redis" scheme="https://ilpl.me/categories/Redis/"/>
-    
-    
-      <category term="Redis" scheme="https://ilpl.me/tags/Redis/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Java Reflec 反射</title>
     <link href="https://ilpl.me/2019/03/02/reflect-reflec/"/>
     <id>https://ilpl.me/2019/03/02/reflect-reflec/</id>
@@ -336,6 +311,31 @@
     
     
       <category term="Java" scheme="https://ilpl.me/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis 笔记</title>
+    <link href="https://ilpl.me/2019/03/02/Redis-use/"/>
+    <id>https://ilpl.me/2019/03/02/Redis-use/</id>
+    <published>2019-03-01T16:00:00.000Z</published>
+    <updated>2019-07-13T13:50:40.407Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Redis概述"><a href="#Redis概述" class="headerlink" title="Redis概述"></a>Redis概述</h1><p><a href="https://redis.io/" target="_blank" rel="noopener">官网</a></p><h2 id="Redis介绍"><a href="#Redis介绍" class="headerlink" title="Redis介绍"></a>Redis介绍</h2><blockquote><p>Rrdis是开源的使用ANSI C语言编写支持网络 基于内存亦可持久化的日志型key-value数据库.</p></blockquote><h2 id="Redis-特点"><a href="#Redis-特点" class="headerlink" title="Redis 特点"></a>Redis 特点</h2><blockquote><p>Redis 与其他 key-value 缓存产品有有以下3个特点:</p><ol><li>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li><li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li><li>Redis支持数据的备份，即master-slave模式的数据备份。</li></ol></blockquote><h2 id="Redis-优势"><a href="#Redis-优势" class="headerlink" title="Redis 优势"></a>Redis 优势</h2><ol><li>性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。</li><li>丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。</li><li>原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。</li><li>丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。</li></ol><h1 id="Redis-下载与安装"><a href="#Redis-下载与安装" class="headerlink" title="Redis 下载与安装"></a>Redis 下载与安装</h1><p><a href="https://redis.io/download" target="_blank" rel="noopener">官网下载地址</a></p><h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ wget http://download.redis.io/releases/redis-5.0.3.tar.gz</span><br><span class="line">$ tar xzf redis-5.0.3.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> redis-5.0.3</span><br><span class="line">$ make</span><br><span class="line">$ make PREFIX=/usr/<span class="built_in">local</span>/redis install <span class="comment">#PREFIX 指定安装的目录 安装</span></span><br><span class="line">redis-server    <span class="comment">#redis服务器</span></span><br><span class="line">redis-cli       <span class="comment">#redis命令行客户端</span></span><br><span class="line">redis-benchmark <span class="comment">#redis性能测试工具</span></span><br><span class="line">redis-check-aof <span class="comment">#AOF文件修复工</span></span><br><span class="line">redis-check-rdb <span class="comment">#RDB文件检索工具</span></span><br><span class="line">$ cp redis.conf /usr/<span class="built_in">local</span>/redis <span class="comment">#复制配置文件</span></span><br></pre></td></tr></table></figure><p>注意要先预装<code>gcc</code></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install gcc <span class="comment">#Debian</span></span><br></pre></td></tr></table></figure><h2 id="配置redis"><a href="#配置redis" class="headerlink" title="配置redis"></a>配置redis</h2><p>一般会设置 redis.conf<br>编辑<code>/usr/local/redis</code>文件修改一下参数</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/<span class="built_in">local</span>/redis</span><br><span class="line"><span class="built_in">bind</span> 0.0.0.0 <span class="comment">#允许任何计算机访问</span></span><br><span class="line">port <span class="comment">#端口设置</span></span><br><span class="line">requirepass admin <span class="comment">#设置密码为admin</span></span><br><span class="line">protected-mode no <span class="comment">#无密码登录yes设置为no</span></span><br></pre></td></tr></table></figure><h2 id="redis-server-使用"><a href="#redis-server-使用" class="headerlink" title="redis-server 使用"></a>redis-server 使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-server reidis.config[config path]</span><br></pre></td></tr></table></figure><h2 id="redis-cli-使用"><a href="#redis-cli-使用" class="headerlink" title="redis-cli 使用"></a>redis-cli 使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-cli -h [host] -p [port] -a [password] </span><br><span class="line">$ ./redis-cli -h [host] -p [port] -a [password] [<span class="built_in">command</span>] <span class="comment">#交互式</span></span><br></pre></td></tr></table></figure><h1 id="Redis-数据类型和常见操作"><a href="#Redis-数据类型和常见操作" class="headerlink" title="Redis 数据类型和常见操作"></a>Redis 数据类型和常见操作</h1><p>支持的数据类型 <code>string</code>(字符串)  list<code>(链表)</code>set<code>(集合)</code>zset<code></code>sorted set<code>(有序集合)</code>hash`(哈希类型)</p><h1 id="Redis-for-Java-Client"><a href="#Redis-for-Java-Client" class="headerlink" title="Redis for Java Client"></a>Redis for Java Client</h1><p>在 JAVA 分类下</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Redis概述&quot;&gt;&lt;a href=&quot;#Redis概述&quot; class=&quot;headerlink&quot; title=&quot;Redis概述&quot;&gt;&lt;/a&gt;Redis概述&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://redis.io/&quot; target=&quot;_blank&quot; rel=&quot;n
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://ilpl.me/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="https://ilpl.me/tags/Redis/"/>
     
   </entry>
   
