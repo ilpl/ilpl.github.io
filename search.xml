@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title><![CDATA[Windows 10 神器]]></title>
-    <url>%2F2019%2F07%2F16%2FWindows-Software-List%2F</url>
+    <url>%2F2019%2F11%2F07%2FWindows-Software-List%2F</url>
     <content type="text"><![CDATA[Windows 10 神器激活工具HWIDGEN]]></content>
       <categories>
         <category>Windows</category>
@@ -13,7 +13,7 @@
   </entry>
   <entry>
     <title><![CDATA[Hadoop 笔记]]></title>
-    <url>%2F2019%2F07%2F16%2Fhadoop%E7%AC%94%E8%AE%B0%2F</url>
+    <url>%2F2019%2F11%2F07%2Fhadoop%E7%AC%94%E8%AE%B0%2F</url>
     <content type="text"><![CDATA[站位]]></content>
       <categories>
         <category>hadoop</category>
@@ -83,14 +83,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Markdown 尖括号]]></title>
-    <url>%2F2019%2F03%2F03%2FMarkdown-Angle-brackets%2F</url>
-    <content type="text"><![CDATA[Markdown 尖括号 在markdown 中 &lt;&gt; 会被识别成html使用无法使用需要使用转义字符 例如 &lt;T&gt;]]></content>
+    <title><![CDATA[Linux for Debian 上传安装软件与包管理]]></title>
+    <url>%2F2019%2F03%2F03%2FLinux-for-Debian-Package-Management%2F</url>
+    <content type="text"><![CDATA[安装软件[TOC] lrzsz1$ yum install lrzsz rz上传sz下载 安装jdk 卸载open-JDK 123456$ java -vsersion$ rpm -qa | grep java #查询已安装的列表筛选java相关java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.i686$ rpm -e --nodeps java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.i686 # -q 卸载 --nodeps 忽略依赖$ rpm -e --nodeps java-1.7.0-openjdk-1.7.0.79-2.5.5.4.el6.i686 上传并安装JDK 通常软件安装到/usr/local目录 12$ mkdir -p /usr/local/jdk #联级创建jdk目录$ tar -xvf jdk-7u71-linux-i586.tar.gz -C /usr/local/jdk/ #解压到jdk目录 配置环境变量 ‘/etc/profile’此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行. 并从/etc/profile.d目录的配置文件中搜集shell的设置。 123456789$ vi /etc/profile$ cat&gt;/ete/profile&lt;&lt;EOF#set java environmentJAVA_HOME=/usr/local/jdk/jdk1.7.0_71CLASSPATH=.:$JAVA_HOME/lib.tools.jarPATH=$JAVA_HOME/bin:$PATHexport JAVA_HOME CLASSPATH PATHEOF # 写入文件$ source /etc/profile # 刷新配置 安装MySQL上传并解压 12345678$ tar -xvf MySQL-5.6.22-1.el6.i686.rpm-bundle.tar -C ./mysql/MySQL-shared-compat-5.6.22-1.el6.i686.rpmMySQL-server-5.6.22-1.el6.i686.rpmMySQL-client-5.6.22-1.el6.i686.rpmMySQL-devel-5.6.22-1.el6.i686.rpmMySQL-test-5.6.22-1.el6.i686.rpmMySQL-shared-5.6.22-1.el6.i686.rpmMySQL-embedded-5.6.22-1.el6.i686.rpm 将自带的mysql卸载并安装 123456$ rpm -qa | grep mysql #查询mysql-libs-5.1.73-5.el6_6.i686$ rpm -e --nodeps mysql-libs-5.1.73-5.el6_6.i686 #卸载$ rpm -ivh MySQL-server-5.6.22-1.el6.i686.rpm #安装需要安装的A RANDOM PASSWORD HAS BEEN SET FOR THE MySQL root USER !You will find that password in '/root/.mysql_secret'. 安装mysql-client 1$ rpm -ivh MySQL-client-5.6.22-1.el6.i686.rpm 启动服务 12$ service mysql startStarting MySQL. 修改MySQL密码 12345$ cat /root/.mysql_secretLaHsElVtSq02u$ mysql -u -p mysql&gt; set password=password('password');Query OK, 0 rows affected (0.00 sec) 自启动mysql 123$ chkconfig --add mysql #添加自启动$ chkconfig mysql on #开启$ chkconfig # 查询列表 mysql远程访问 123$ chkconfig --add mysql #添加自启动$ chkconfig mysql on #开启$ chkconfig # 查询列表 数据库远程访问开启 12grant all privileges on *.* to &apos;root&apos;@&apos;%&apos; identified by &apos;password&apos;;flush privileges; 关闭防火墙 12345$ /sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT$ /etc/rc.d/init.d/iptables save$ /etc/init.d/iptables status#学习阶段我们也可以直接将防火墙关闭$ service iptables stop;]]></content>
       <categories>
-        <category>Markdown</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>Markdown</tag>
+        <tag>Linux</tag>
+        <tag>Debian</tag>
       </tags>
   </entry>
   <entry>
@@ -105,15 +106,14 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux for Debian 上传安装软件与包管理]]></title>
-    <url>%2F2019%2F03%2F03%2FLinux-for-Debian-Package-Management%2F</url>
-    <content type="text"><![CDATA[安装软件[TOC] lrzsz1$ yum install lrzsz rz上传sz下载 安装jdk 卸载open-JDK 123456$ java -vsersion$ rpm -qa | grep java #查询已安装的列表筛选java相关java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.i686$ rpm -e --nodeps java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.i686 # -q 卸载 --nodeps 忽略依赖$ rpm -e --nodeps java-1.7.0-openjdk-1.7.0.79-2.5.5.4.el6.i686 上传并安装JDK 通常软件安装到/usr/local目录 12$ mkdir -p /usr/local/jdk #联级创建jdk目录$ tar -xvf jdk-7u71-linux-i586.tar.gz -C /usr/local/jdk/ #解压到jdk目录 配置环境变量 ‘/etc/profile’此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行. 并从/etc/profile.d目录的配置文件中搜集shell的设置。 123456789$ vi /etc/profile$ cat&gt;/ete/profile&lt;&lt;EOF#set java environmentJAVA_HOME=/usr/local/jdk/jdk1.7.0_71CLASSPATH=.:$JAVA_HOME/lib.tools.jarPATH=$JAVA_HOME/bin:$PATHexport JAVA_HOME CLASSPATH PATHEOF # 写入文件$ source /etc/profile # 刷新配置 安装MySQL上传并解压 12345678$ tar -xvf MySQL-5.6.22-1.el6.i686.rpm-bundle.tar -C ./mysql/MySQL-shared-compat-5.6.22-1.el6.i686.rpmMySQL-server-5.6.22-1.el6.i686.rpmMySQL-client-5.6.22-1.el6.i686.rpmMySQL-devel-5.6.22-1.el6.i686.rpmMySQL-test-5.6.22-1.el6.i686.rpmMySQL-shared-5.6.22-1.el6.i686.rpmMySQL-embedded-5.6.22-1.el6.i686.rpm 将自带的mysql卸载并安装 123456$ rpm -qa | grep mysql #查询mysql-libs-5.1.73-5.el6_6.i686$ rpm -e --nodeps mysql-libs-5.1.73-5.el6_6.i686 #卸载$ rpm -ivh MySQL-server-5.6.22-1.el6.i686.rpm #安装需要安装的A RANDOM PASSWORD HAS BEEN SET FOR THE MySQL root USER !You will find that password in '/root/.mysql_secret'. 安装mysql-client 1$ rpm -ivh MySQL-client-5.6.22-1.el6.i686.rpm 启动服务 12$ service mysql startStarting MySQL. 修改MySQL密码 12345$ cat /root/.mysql_secretLaHsElVtSq02u$ mysql -u -p mysql&gt; set password=password('password');Query OK, 0 rows affected (0.00 sec) 自启动mysql 123$ chkconfig --add mysql #添加自启动$ chkconfig mysql on #开启$ chkconfig # 查询列表 mysql远程访问 123$ chkconfig --add mysql #添加自启动$ chkconfig mysql on #开启$ chkconfig # 查询列表 数据库远程访问开启 12grant all privileges on *.* to &apos;root&apos;@&apos;%&apos; identified by &apos;password&apos;;flush privileges; 关闭防火墙 12345$ /sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT$ /etc/rc.d/init.d/iptables save$ /etc/init.d/iptables status#学习阶段我们也可以直接将防火墙关闭$ service iptables stop;]]></content>
+    <title><![CDATA[Markdown 尖括号]]></title>
+    <url>%2F2019%2F03%2F03%2FMarkdown-Angle-brackets%2F</url>
+    <content type="text"><![CDATA[Markdown 尖括号 在markdown 中 &lt;&gt; 会被识别成html使用无法使用需要使用转义字符 例如 &lt;T&gt;]]></content>
       <categories>
-        <category>Linux</category>
+        <category>Markdown</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
-        <tag>Debian</tag>
+        <tag>Markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -129,17 +129,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux 用户和组]]></title>
-    <url>%2F2019%2F03%2F02%2FLinux-user-and-group%2F</url>
-    <content type="text"><![CDATA[用户useradd12$ useradd test 添加test用户$ useradd test -d /home/test 指定为用户home目录 passwd1$ passwd test 为test设置密码 userdel12$ userdel test$ userdel -r test #删除用户和home目录 usermod 更改用户名 12345$ usermod -l old_name new_name$ usermod -g 用户组 用户名 #强制修改用户所在组$ usermod -a -G 用户组 用户名 #把某个用户添加进某个组 组 当在创建一个新用户user 的时候,若没有指定用户组,那将会创建一个和改用户名同名的私有组. groupadd12$ groupadd public #创建一个名为public 的用户组$ groupadd username -g public #创建用户username指定组为public groupdel1$ groupdel public #删除用户组,删除用户组前必须清空用户组 groupmod 更改组名 1$ groupmod -n old_groupname new_groupname]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Redis 笔记]]></title>
     <url>%2F2019%2F03%2F02%2FRedis-use%2F</url>
     <content type="text"><![CDATA[Redis概述官网 Redis介绍 Rrdis是开源的使用ANSI C语言编写支持网络 基于内存亦可持久化的日志型key-value数据库. Redis 特点 Redis 与其他 key-value 缓存产品有有以下3个特点: Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。 Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。 Redis支持数据的备份，即master-slave模式的数据备份。 Redis 优势 性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。 丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。 原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。 丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。 Redis 下载与安装官网下载地址 下载安装1234567891011$ wget http://download.redis.io/releases/redis-5.0.3.tar.gz$ tar xzf redis-5.0.3.tar.gz$ cd redis-5.0.3$ make$ make PREFIX=/usr/local/redis install #PREFIX 指定安装的目录 安装redis-server #redis服务器redis-cli #redis命令行客户端redis-benchmark #redis性能测试工具redis-check-aof #AOF文件修复工redis-check-rdb #RDB文件检索工具$ cp redis.conf /usr/local/redis #复制配置文件 注意要先预装gcc 1$ yum install gcc #Debian 配置redis一般会设置 redis.conf编辑/usr/local/redis文件修改一下参数 12345$ vi /usr/local/redisbind 0.0.0.0 #允许任何计算机访问port #端口设置requirepass admin #设置密码为adminprotected-mode no #无密码登录yes设置为no redis-server 使用1$ ./redis-server reidis.config[config path] redis-cli 使用12$ ./redis-cli -h [host] -p [port] -a [password] $ ./redis-cli -h [host] -p [port] -a [password] [command] #交互式 Redis 数据类型和常见操作支持的数据类型 string(字符串) list(链表)set(集合)zsetsorted set(有序集合)hash`(哈希类型) Redis for Java Client在 JAVA 分类下]]></content>
@@ -148,6 +137,17 @@
       </categories>
       <tags>
         <tag>Redis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux 用户和组]]></title>
+    <url>%2F2019%2F03%2F02%2FLinux-user-and-group%2F</url>
+    <content type="text"><![CDATA[用户useradd12$ useradd test 添加test用户$ useradd test -d /home/test 指定为用户home目录 passwd1$ passwd test 为test设置密码 userdel12$ userdel test$ userdel -r test #删除用户和home目录 usermod 更改用户名 12345$ usermod -l old_name new_name$ usermod -g 用户组 用户名 #强制修改用户所在组$ usermod -a -G 用户组 用户名 #把某个用户添加进某个组 组 当在创建一个新用户user 的时候,若没有指定用户组,那将会创建一个和改用户名同名的私有组. groupadd12$ groupadd public #创建一个名为public 的用户组$ groupadd username -g public #创建用户username指定组为public groupdel1$ groupdel public #删除用户组,删除用户组前必须清空用户组 groupmod 更改组名 1$ groupmod -n old_groupname new_groupname]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -162,17 +162,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux Find 命令]]></title>
-    <url>%2F2019%2F03%2F01%2FLinux-find%2F</url>
-    <content type="text"><![CDATA[find 指令用于查找符合条件的文件 1find / -name &quot;ins*&quot; #从/目录下查找以ins开头的文件]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux Tar 解压缩]]></title>
     <url>%2F2019%2F03%2F01%2FLInux-tar%2F</url>
     <content type="text"><![CDATA[tar 将许多文件一起保存至一个单独的磁带或磁盘归档，并能从归档中单独还原所需文件。-c：创建一个新tar文件-v：显示运行过程的信息-f：指定文件名-z：调用gzip压缩命令进行压缩-t：查看压缩文件的内容-x：解开tar文件 打包1tar –cvf xxx.tar [目录] 打包并且压缩1tar –zcvf xxx.tar.gz [目录] 解压1tar -xvf xxx.tar.gz -C [目录]]]></content>
@@ -184,9 +173,20 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux Find 命令]]></title>
+    <url>%2F2019%2F03%2F01%2FLinux-find%2F</url>
+    <content type="text"><![CDATA[find 指令用于查找符合条件的文件 1find / -name &quot;ins*&quot; #从/目录下查找以ins开头的文件]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[非标准端口DNS(5353端口,UDP/TCP,港澳台)🔍]]></title>
     <url>%2F2018%2F08%2F17%2Fpublic-DNS-5353-list%2F</url>
-    <content type="text"><![CDATA[前言国内DNS查询海外域名总有点BUG😊所以把平常使用的一些DNS 分享出来 下方DNS均支持 53,5353(UDP/TCP)使用非标准DNS能解决海外部分网站打不开的问题 DNS国内无污染DNSqieyz DNS123.207.22.79 无污染DNS111.230.37.44 去广告DNS 中科大防污染DNS202.141.162.123 中国电信202.38.93.153 教育网202.141.176.93 中国移动 海外公共DNSOpenDNS (推荐):支持5353,443端口208.67.222.222208.67.220.220 AdGuard DNS:使用以下服务器拦截广告，跟踪和钓鱼176.103.130.130176.103.130.1312a00:5a60::ad1:0ff2a00:5a60::ad2:0ff 默认 + 拦截成人网站 + 安全搜索176.103.130.132176.103.130.1342a00:5a60::bad1:0ff2a00:5a60::bad2:0ff opennic DNS5353 仅支持TCP185.121.177.177169.239.202.2022a05:dfc7:5::532a05:dfc7:5::5353 更多国家和地区(港澳台)(部分支持5353)自取网站https://dns.d0wn.biz/https://dnscrypt.info/https://www.publicdns.xyz/ (推荐) 测试208.67.222.222 替换成你需要测试的域名5353 替换成你需要测试的端口 DNS TCPLinux 平台 1$ dig www.baidu.com @208.67.222.222 -p 5353 +tcp Windows 平台默认nslookup是只支持53端口,所以要先端口转发再进行DNS查询.要在管理员权限下进行.自带端口转发只支持TCP,所以查询的都是TCP,UDP非53端口暂时我不知道怎么弄 12$ netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=53 connectaddress=208.67.222.222 connectport=5353$ nslookup -vc www.baidu.com 127.0.0.1 使用完TCPDNS查询记得取消端口转发 1$ netsh interface portproxy delete v4tov4 listenaddress=0.0.0.0 listenport=53 DNS UDPLinux 平台 1$ dig www.baidu.com @208.67.222.222 -p 5353 Windows 平台 1$ nslookup www.baidu.com 208.67.222.222]]></content>
+    <content type="text"><![CDATA[前言国内DNS查询海外域名总有点BUG😊所以把平常使用的一些DNS 分享出来 下方DNS均支持 53,5353(UDP/TCP)使用非标准DNS能解决海外部分网站打不开的问题 DNS国内无污染DNSqieyz DNS123.207.22.79 无污染DNS111.230.37.44 去广告DNS 中科大防污染DNS202.141.162.123 中国电信202.38.93.153 教育网202.141.176.93 中国移动 海外公共DNS香港 DNS:123.1.150.115123.1.150.116123.1.150.117123.1.150.118123.1.150.119123.1.150.120123.1.150.121123.1.150.122123.1.150.123123.1.150.124123.1.150.125123.1.150.126 OpenDNS (推荐):支持5353,443端口208.67.222.222208.67.220.220 AdGuard DNS:使用以下服务器拦截广告，跟踪和钓鱼176.103.130.130176.103.130.1312a00:5a60::ad1:0ff2a00:5a60::ad2:0ff 默认 + 拦截成人网站 + 安全搜索176.103.130.132176.103.130.1342a00:5a60::bad1:0ff2a00:5a60::bad2:0ff opennic DNS5353 仅支持TCP185.121.177.177169.239.202.2022a05:dfc7:5::532a05:dfc7:5::5353 更多国家和地区(港澳台)(部分支持5353)自取网站https://dns.d0wn.biz/https://dnscrypt.info/https://www.publicdns.xyz/ (推荐) 测试208.67.222.222 替换成你需要测试的域名5353 替换成你需要测试的端口 DNS TCPLinux 平台 1$ dig www.baidu.com @208.67.222.222 -p 5353 +tcp Windows 平台默认nslookup是只支持53端口,所以要先端口转发再进行DNS查询.要在管理员权限下进行.自带端口转发只支持TCP,所以查询的都是TCP,UDP非53端口暂时我不知道怎么弄 12$ netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=53 connectaddress=208.67.222.222 connectport=5353$ nslookup -vc www.baidu.com 127.0.0.1 使用完TCPDNS查询记得取消端口转发 1$ netsh interface portproxy delete v4tov4 listenaddress=0.0.0.0 listenport=53 DNS UDPLinux 平台 1$ dig www.baidu.com @208.67.222.222 -p 5353 Windows 平台 1$ nslookup www.baidu.com 208.67.222.222]]></content>
       <categories>
         <category>DNS</category>
       </categories>
