@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title><![CDATA[Windows 10 神器]]></title>
-    <url>%2F2019%2F11%2F07%2FWindows-Software-List%2F</url>
+    <url>%2F2020%2F03%2F07%2FWindows-Software-List%2F</url>
     <content type="text"><![CDATA[Windows 10 神器激活工具HWIDGEN]]></content>
       <categories>
         <category>Windows</category>
@@ -13,13 +13,38 @@
   </entry>
   <entry>
     <title><![CDATA[Hadoop 笔记]]></title>
-    <url>%2F2019%2F11%2F07%2Fhadoop%E7%AC%94%E8%AE%B0%2F</url>
+    <url>%2F2020%2F03%2F07%2Fhadoop%E7%AC%94%E8%AE%B0%2F</url>
     <content type="text"><![CDATA[站位]]></content>
       <categories>
         <category>hadoop</category>
       </categories>
       <tags>
         <tag>hadoop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[汇编跳转]]></title>
+    <url>%2F2020%2F03%2F07%2FAssembly-jmp%2F</url>
+    <content type="text"><![CDATA[汇编跳转 jnp jp jmp j]]></content>
+      <categories>
+        <category>assembly</category>
+      </categories>
+      <tags>
+        <tag>assembly hook</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Nginx 转发任意路径到Websocket/ws]]></title>
+    <url>%2F2020%2F03%2F07%2FNginx-forward-all-path-to-websockset%2F</url>
+    <content type="text"><![CDATA[前言我需要websocket/ws能接受任意路径并转发 需要Nginx Nginx配置 在 Nginx的nginx.conf配置添加以下然后重启即可 123456789location ^~ / &#123; proxy_redirect off; rewrite ^(.*)$ /ws break; proxy_pass http://127.0.0.1:33684/; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $http_host;&#125;]]></content>
+      <categories>
+        <category>Nginx</category>
+      </categories>
+      <tags>
+        <tag>WEB</tag>
+        <tag>Nginx</tag>
+        <tag>V2</tag>
+        <tag>v2-ray</tag>
       </tags>
   </entry>
   <entry>
@@ -117,29 +142,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Redis for Java]]></title>
-    <url>%2F2019%2F03%2F02%2FRedis4Java%2F</url>
-    <content type="text"><![CDATA[Redis for JavaJedis Redis client for Java 要使用JedisJedis官网 1234Jedis jedis = new Jedis("localhost");jedis.auth("redis_password"); #设置验证密码jedis.set("foo","bar");String values = jedis.get("foo"); 可能遇到的问题远程服务器需要开启密码访问 或 关闭密码安全详情在Redis目录]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux 用户和组]]></title>
-    <url>%2F2019%2F03%2F02%2FLinux-user-and-group%2F</url>
-    <content type="text"><![CDATA[用户useradd12$ useradd test 添加test用户$ useradd test -d /home/test 指定为用户home目录 passwd1$ passwd test 为test设置密码 userdel12$ userdel test$ userdel -r test #删除用户和home目录 usermod 更改用户名 12345$ usermod -l old_name new_name$ usermod -g 用户组 用户名 #强制修改用户所在组$ usermod -a -G 用户组 用户名 #把某个用户添加进某个组 组 当在创建一个新用户user 的时候,若没有指定用户组,那将会创建一个和改用户名同名的私有组. groupadd12$ groupadd public #创建一个名为public 的用户组$ groupadd username -g public #创建用户username指定组为public groupdel1$ groupdel public #删除用户组,删除用户组前必须清空用户组 groupmod 更改组名 1$ groupmod -n old_groupname new_groupname]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Redis 笔记]]></title>
     <url>%2F2019%2F03%2F02%2FRedis-use%2F</url>
     <content type="text"><![CDATA[Redis概述官网 Redis介绍 Rrdis是开源的使用ANSI C语言编写支持网络 基于内存亦可持久化的日志型key-value数据库. Redis 特点 Redis 与其他 key-value 缓存产品有有以下3个特点: Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。 Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。 Redis支持数据的备份，即master-slave模式的数据备份。 Redis 优势 性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。 丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。 原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。 丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。 Redis 下载与安装官网下载地址 下载安装1234567891011$ wget http://download.redis.io/releases/redis-5.0.3.tar.gz$ tar xzf redis-5.0.3.tar.gz$ cd redis-5.0.3$ make$ make PREFIX=/usr/local/redis install #PREFIX 指定安装的目录 安装redis-server #redis服务器redis-cli #redis命令行客户端redis-benchmark #redis性能测试工具redis-check-aof #AOF文件修复工redis-check-rdb #RDB文件检索工具$ cp redis.conf /usr/local/redis #复制配置文件 注意要先预装gcc 1$ yum install gcc #Debian 配置redis一般会设置 redis.conf编辑/usr/local/redis文件修改一下参数 12345$ vi /usr/local/redisbind 0.0.0.0 #允许任何计算机访问port #端口设置requirepass admin #设置密码为adminprotected-mode no #无密码登录yes设置为no redis-server 使用1$ ./redis-server reidis.config[config path] redis-cli 使用12$ ./redis-cli -h [host] -p [port] -a [password] $ ./redis-cli -h [host] -p [port] -a [password] [command] #交互式 Redis 数据类型和常见操作支持的数据类型 string(字符串) list(链表)set(集合)zsetsorted set(有序集合)hash`(哈希类型) Redis for Java Client在 JAVA 分类下]]></content>
@@ -162,9 +164,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux Find 命令]]></title>
-    <url>%2F2019%2F03%2F01%2FLinux-find%2F</url>
-    <content type="text"><![CDATA[find 指令用于查找符合条件的文件 1find / -name &quot;ins*&quot; #从/目录下查找以ins开头的文件]]></content>
+    <title><![CDATA[Linux 用户和组]]></title>
+    <url>%2F2019%2F03%2F02%2FLinux-user-and-group%2F</url>
+    <content type="text"><![CDATA[用户useradd12$ useradd test 添加test用户$ useradd test -d /home/test 指定为用户home目录 passwd1$ passwd test 为test设置密码 userdel12$ userdel test$ userdel -r test #删除用户和home目录 usermod 更改用户名 12345$ usermod -l old_name new_name$ usermod -g 用户组 用户名 #强制修改用户所在组$ usermod -a -G 用户组 用户名 #把某个用户添加进某个组 组 当在创建一个新用户user 的时候,若没有指定用户组,那将会创建一个和改用户名同名的私有组. groupadd12$ groupadd public #创建一个名为public 的用户组$ groupadd username -g public #创建用户username指定组为public groupdel1$ groupdel public #删除用户组,删除用户组前必须清空用户组 groupmod 更改组名 1$ groupmod -n old_groupname new_groupname]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -173,9 +175,32 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Redis for Java]]></title>
+    <url>%2F2019%2F03%2F02%2FRedis4Java%2F</url>
+    <content type="text"><![CDATA[Redis for JavaJedis Redis client for Java 要使用JedisJedis官网 1234Jedis jedis = new Jedis("localhost");jedis.auth("redis_password"); #设置验证密码jedis.set("foo","bar");String values = jedis.get("foo"); 可能遇到的问题远程服务器需要开启密码访问 或 关闭密码安全详情在Redis目录]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux Tar 解压缩]]></title>
     <url>%2F2019%2F03%2F01%2FLInux-tar%2F</url>
     <content type="text"><![CDATA[tar 将许多文件一起保存至一个单独的磁带或磁盘归档，并能从归档中单独还原所需文件。-c：创建一个新tar文件-v：显示运行过程的信息-f：指定文件名-z：调用gzip压缩命令进行压缩-t：查看压缩文件的内容-x：解开tar文件 打包1tar –cvf xxx.tar [目录] 打包并且压缩1tar –zcvf xxx.tar.gz [目录] 解压1tar -xvf xxx.tar.gz -C [目录]]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux Find 命令]]></title>
+    <url>%2F2019%2F03%2F01%2FLinux-find%2F</url>
+    <content type="text"><![CDATA[find 指令用于查找符合条件的文件 1find / -name &quot;ins*&quot; #从/目录下查找以ins开头的文件]]></content>
       <categories>
         <category>Linux</category>
       </categories>
