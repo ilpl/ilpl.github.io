@@ -114,18 +114,18 @@
 
 
 
-  <meta name="description" content="前言我需要websocket/ws能接受任意路径并转发  需要Nginx  Nginx配置 在 Nginx的nginx.conf配置添加以下然后重启即可  123456789location ^~ / &amp;#123;    proxy_redirect off;    rewrite  ^(.*)$  /ws  break;    proxy_pass http://127.0.0.1:33684/">
+  <meta name="description" content="前言我需要websocket/ws能接受任意路径并转发  需要Nginx  Nginx配置 在 Nginx的nginx.conf配置添加以下然后重启即可  1234567891011location ^~ / &amp;#123;    proxy_redirect off;    # /ws修改为你的路径     rewrite  ^(.*)$  /ws  break;    # http://127.">
 <meta name="keywords" content="WEB,Nginx,V2,v2-ray">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx 转发任意路径到Websocket&#x2F;ws">
 <meta property="og:url" content="https://ilpl.me/2020/03/07/Nginx-forward-all-path-to-websockset/index.html">
 <meta property="og:site_name" content="iLPL&#39;s Blog">
-<meta property="og:description" content="前言我需要websocket/ws能接受任意路径并转发  需要Nginx  Nginx配置 在 Nginx的nginx.conf配置添加以下然后重启即可  123456789location ^~ / &amp;#123;    proxy_redirect off;    rewrite  ^(.*)$  /ws  break;    proxy_pass http://127.0.0.1:33684/">
+<meta property="og:description" content="前言我需要websocket/ws能接受任意路径并转发  需要Nginx  Nginx配置 在 Nginx的nginx.conf配置添加以下然后重启即可  1234567891011location ^~ / &amp;#123;    proxy_redirect off;    # /ws修改为你的路径     rewrite  ^(.*)$  /ws  break;    # http://127.">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-07T10:08:30.184Z">
+<meta property="og:updated_time" content="2020-03-07T10:16:21.533Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx 转发任意路径到Websocket&#x2F;ws">
-<meta name="twitter:description" content="前言我需要websocket/ws能接受任意路径并转发  需要Nginx  Nginx配置 在 Nginx的nginx.conf配置添加以下然后重启即可  123456789location ^~ / &amp;#123;    proxy_redirect off;    rewrite  ^(.*)$  /ws  break;    proxy_pass http://127.0.0.1:33684/">
+<meta name="twitter:description" content="前言我需要websocket/ws能接受任意路径并转发  需要Nginx  Nginx配置 在 Nginx的nginx.conf配置添加以下然后重启即可  1234567891011location ^~ / &amp;#123;    proxy_redirect off;    # /ws修改为你的路径     rewrite  ^(.*)$  /ws  break;    # http://127.">
 
 
 
@@ -451,7 +451,7 @@
                 
               
 
-              <time title="创建时间：2020-03-07 00:00:00 / 修改时间：18:08:30" itemprop="dateCreated datePublished" datetime="2020-03-07T00:00:00+08:00">2020-03-07</time>
+              <time title="创建时间：2020-03-07 00:00:00 / 修改时间：18:16:21" itemprop="dateCreated datePublished" datetime="2020-03-07T00:00:00+08:00">2020-03-07</time>
             </span>
           
 
@@ -517,7 +517,7 @@
 <h3 id="Nginx配置"><a href="#Nginx配置" class="headerlink" title="Nginx配置"></a>Nginx配置</h3><blockquote>
 <p>在 <code>Nginx</code>的<code>nginx.conf</code>配置添加以下然后重启即可</p>
 </blockquote>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span><span class="regexp"> ^~</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="attribute">rewrite</span> <span class="regexp"> ^(.*)$</span>  /ws  <span class="literal">break</span>;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:33684/;</span><br><span class="line">    <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Connection <span class="string">"upgrade"</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span><span class="regexp"> ^~</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="comment"># /ws修改为你的路径 </span></span><br><span class="line">    <span class="attribute">rewrite</span> <span class="regexp"> ^(.*)$</span>  /ws  <span class="literal">break</span>;</span><br><span class="line">    <span class="comment"># http://127.0.0.1:33684/ 修改为你的IP:PORT</span></span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:33684/;</span><br><span class="line">    <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Connection <span class="string">"upgrade"</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 

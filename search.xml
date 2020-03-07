@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Nginx 转发任意路径到Websocket/ws]]></title>
     <url>%2F2020%2F03%2F07%2FNginx-forward-all-path-to-websockset%2F</url>
-    <content type="text"><![CDATA[前言我需要websocket/ws能接受任意路径并转发 需要Nginx Nginx配置 在 Nginx的nginx.conf配置添加以下然后重启即可 123456789location ^~ / &#123; proxy_redirect off; rewrite ^(.*)$ /ws break; proxy_pass http://127.0.0.1:33684/; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $http_host;&#125;]]></content>
+    <content type="text"><![CDATA[前言我需要websocket/ws能接受任意路径并转发 需要Nginx Nginx配置 在 Nginx的nginx.conf配置添加以下然后重启即可 1234567891011location ^~ / &#123; proxy_redirect off; # /ws修改为你的路径 rewrite ^(.*)$ /ws break; # http://127.0.0.1:33684/ 修改为你的IP:PORT proxy_pass http://127.0.0.1:33684/; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $http_host;&#125;]]></content>
       <categories>
         <category>Nginx</category>
       </categories>
@@ -119,6 +119,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux常用网络操作]]></title>
+    <url>%2F2019%2F03%2F03%2FLinux-network-cmd%2F</url>
+    <content type="text"><![CDATA[主机名配置[TOC] hostname12$ hostname #查看主机名$ hostname name.local #修改主机名 重启无效 永久修改需要配置/etc/sysconfig/network 123$ cat /etc/sysconfig/networkNETWORKING=yesHOSTNAME=localhost.localdomain IP配置setup1$ setup #建立 伪桌面程序 设置IP ifconfig12$ ifconfig #查看IP$ ifconfig eth0(网卡设备) 192.168.1.2 #修改局域网IP 永久修改需要配置/etc/sysconfig/network-scripts/ifcfg-eth0,需要对应参数,修改前可以先启动setup编辑静态IP活的参数 网络服务管理service123456$ service network status #查看指定服务的状态$ service network stop #停止指定服务$ service network start #启动指定服务$ service network restart #重启指定服务$ service --status–all #查看系统中所有后台服务$ netstat –nltp #查看系统中网络进程的端口监听情况 防火墙设置 防火墙配置文件/etc/sysconfig/iptables 1234$ service iptables status 查看防火墙状态$ service iptables stop 关闭防火墙$ service iptables start 启动防火墙$ chkconfig iptables off 禁止防火墙自启]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux for Debian 上传安装软件与包管理]]></title>
     <url>%2F2019%2F03%2F03%2FLinux-for-Debian-Package-Management%2F</url>
     <content type="text"><![CDATA[安装软件[TOC] lrzsz1$ yum install lrzsz rz上传sz下载 安装jdk 卸载open-JDK 123456$ java -vsersion$ rpm -qa | grep java #查询已安装的列表筛选java相关java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.i686$ rpm -e --nodeps java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.i686 # -q 卸载 --nodeps 忽略依赖$ rpm -e --nodeps java-1.7.0-openjdk-1.7.0.79-2.5.5.4.el6.i686 上传并安装JDK 通常软件安装到/usr/local目录 12$ mkdir -p /usr/local/jdk #联级创建jdk目录$ tar -xvf jdk-7u71-linux-i586.tar.gz -C /usr/local/jdk/ #解压到jdk目录 配置环境变量 ‘/etc/profile’此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行. 并从/etc/profile.d目录的配置文件中搜集shell的设置。 123456789$ vi /etc/profile$ cat&gt;/ete/profile&lt;&lt;EOF#set java environmentJAVA_HOME=/usr/local/jdk/jdk1.7.0_71CLASSPATH=.:$JAVA_HOME/lib.tools.jarPATH=$JAVA_HOME/bin:$PATHexport JAVA_HOME CLASSPATH PATHEOF # 写入文件$ source /etc/profile # 刷新配置 安装MySQL上传并解压 12345678$ tar -xvf MySQL-5.6.22-1.el6.i686.rpm-bundle.tar -C ./mysql/MySQL-shared-compat-5.6.22-1.el6.i686.rpmMySQL-server-5.6.22-1.el6.i686.rpmMySQL-client-5.6.22-1.el6.i686.rpmMySQL-devel-5.6.22-1.el6.i686.rpmMySQL-test-5.6.22-1.el6.i686.rpmMySQL-shared-5.6.22-1.el6.i686.rpmMySQL-embedded-5.6.22-1.el6.i686.rpm 将自带的mysql卸载并安装 123456$ rpm -qa | grep mysql #查询mysql-libs-5.1.73-5.el6_6.i686$ rpm -e --nodeps mysql-libs-5.1.73-5.el6_6.i686 #卸载$ rpm -ivh MySQL-server-5.6.22-1.el6.i686.rpm #安装需要安装的A RANDOM PASSWORD HAS BEEN SET FOR THE MySQL root USER !You will find that password in '/root/.mysql_secret'. 安装mysql-client 1$ rpm -ivh MySQL-client-5.6.22-1.el6.i686.rpm 启动服务 12$ service mysql startStarting MySQL. 修改MySQL密码 12345$ cat /root/.mysql_secretLaHsElVtSq02u$ mysql -u -p mysql&gt; set password=password('password');Query OK, 0 rows affected (0.00 sec) 自启动mysql 123$ chkconfig --add mysql #添加自启动$ chkconfig mysql on #开启$ chkconfig # 查询列表 mysql远程访问 123$ chkconfig --add mysql #添加自启动$ chkconfig mysql on #开启$ chkconfig # 查询列表 数据库远程访问开启 12grant all privileges on *.* to &apos;root&apos;@&apos;%&apos; identified by &apos;password&apos;;flush privileges; 关闭防火墙 12345$ /sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT$ /etc/rc.d/init.d/iptables save$ /etc/init.d/iptables status#学习阶段我们也可以直接将防火墙关闭$ service iptables stop;]]></content>
@@ -128,17 +139,6 @@
       <tags>
         <tag>Linux</tag>
         <tag>Debian</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux常用网络操作]]></title>
-    <url>%2F2019%2F03%2F03%2FLinux-network-cmd%2F</url>
-    <content type="text"><![CDATA[主机名配置[TOC] hostname12$ hostname #查看主机名$ hostname name.local #修改主机名 重启无效 永久修改需要配置/etc/sysconfig/network 123$ cat /etc/sysconfig/networkNETWORKING=yesHOSTNAME=localhost.localdomain IP配置setup1$ setup #建立 伪桌面程序 设置IP ifconfig12$ ifconfig #查看IP$ ifconfig eth0(网卡设备) 192.168.1.2 #修改局域网IP 永久修改需要配置/etc/sysconfig/network-scripts/ifcfg-eth0,需要对应参数,修改前可以先启动setup编辑静态IP活的参数 网络服务管理service123456$ service network status #查看指定服务的状态$ service network stop #停止指定服务$ service network start #启动指定服务$ service network restart #重启指定服务$ service --status–all #查看系统中所有后台服务$ netstat –nltp #查看系统中网络进程的端口监听情况 防火墙设置 防火墙配置文件/etc/sysconfig/iptables 1234$ service iptables status 查看防火墙状态$ service iptables stop 关闭防火墙$ service iptables start 启动防火墙$ chkconfig iptables off 禁止防火墙自启]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -153,17 +153,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Java Reflec 反射]]></title>
-    <url>%2F2019%2F03%2F02%2Freflect-reflec%2F</url>
-    <content type="text"><![CDATA[Java reflec 反射[TOC] 反射介绍 反射,是一种计算机处理方式.是程序可以访问,检测修改它本身状态或行为的一种能力.JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。 JAVA反射常用的API123public final class Class&lt;T&gt;extends Objectimplements Serializable, GenericDeclaration, Type, AnnotatedElement Class 类的实例表示正在运行的 Java 应用程序中的类和接口。枚举是一种类，注释是一种接口。 在java.long.reflect包下有三个类 java.lang.reflect.AccessibleObject java.lang.reflect.Constructor&lt;T&gt; java.lang.reflect.Field java.lang.reflect.Method 反射优缺点优点： 反射提高了程序的灵活性和扩展性。 降低耦合性，提高自适应能力。 它允许程序创建和控制任何类的对象，无需提前硬编码目标类。 缺点： 性能问题：使用反射基本上是一种解释操作，用于字段和方法接入时要远慢于直接代码。因此反射机制主要应用在对灵活性和拓展性要求很高的系统框架上，普通程序不建议使用。 使用反射会模糊程序内部逻辑；程序员希望在源代码中看到程序的逻辑，反射却绕过了源代码的技术，因而会带来维护的问题，反射代码比相应的直接代码更复杂。 Class 介绍 Java 中 Class 它可以代表任意类型的类或接口类型 获得Class 获得Class 有3种方式: 123456789//对象引用.getClass();Object obj = new Object();obj.getClass();//类名或接口名直接点属性 .class 获取Object.class;//通过Class类的forname方法获取 .推荐方法Class.forname("java.lang.Object"); 为什么要获取Class对象? 获取类的成员 Constructor Field Method 对象必须先获取Class.通过Class 获取. Constructor java.lang.reflect.Constructor 构造的意思Constructor它描述的单个构造器，我们得到它就可以实例化对象 获取Constructor 返回值 方法名(形式参数) 说明 Constructor &lt;T&gt; getConstructor(Class &lt;T&gt; … parameterTypes) 返回一个 Constructor 对象，它反映此 Class 对象所表示的类的指定公共构造方法。 Constructor &lt;T&gt; [] getConstructors() 返回一个包含某些 Constructor 对象的数组，这些对象反映此 Class 对象所表示的类的所有公共构造方法。 Constructor &lt;T&gt; getDeclaredConstructor(Class &lt;T&gt; … parameterTypes) 返回一个 Constructor 对象，该对象反映此 Class 对象所表示的类或接口的指定构造方法。 Constructor &lt;T&gt;[] getDeclaredClasses() 返回 Class 对象的一个数组，这些对象反映声明为此 Class 对象所表示的类的成员的所有类和接口。 12345678910111213141516//获取public修饰的构造方法getConstructorgetConstructors//获取所有构造方法包括私有getDeclaredConstructorgetDeclaredClasses//得到构造器后就可以实例化对象@param 使用此 Constructor 对象表示的构造方法来创建该构造方法的声明类的新实例，并用指定的初始化参数初始化该实例。public T newInstance(Object... initargs);//如果不是public 需要使用取消检查//将此对象的 accessible 标志设置为指示的布尔值public void setAccessible(boolean flag); // constructor.setAccessible(true); Field java.lang.reflect.Field 它描述的属性对象 获取Field更获取Constructor类似 对Field进行赋值 返回值 方法名(形式参数) 说明 void set(Object obj, Object value) 将指定对象变量上此 Field 对象表示的字段设置为指定的新值。 void setBoolean(Object obj, boolean z) 将字段的值设置为指定对象上的一个 boolean 值。 void setByte(Object obj, byte b) 将字段的值设置为指定对象上的一个 byte 值。 void setChar(Object obj, char c) 将字段的值设置为指定对象上的一个 char 值。 void setDouble(Object obj, double d) 将字段的值设置为指定对象上的一个 double 值。 void setFloat(Object obj, float f) 将字段的值设置为指定对象上的一个 float 值。 void setInt(Object obj, int i) 将字段的值设置为指定对象上的一个 int 值。 void setLong(Object obj, long l) 将字段的值设置为指定对象上的一个 long 值。 void setShort(Object obj, short s) 将字段的值设置为指定对象上的一个 short 值。 对Field取值 返回值 方法名(形式参数) 说明 Object get(Object obj) 返回指定对象上此 Field 表示的字段的值。 也可以使用get加数据类型的方式 例如 getInt(); 如set实例. Method (重点) java.lang.reflect.Method 它描述的是类或接口中的方法 获取Method 对象]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux 用户和组]]></title>
     <url>%2F2019%2F03%2F02%2FLinux-user-and-group%2F</url>
     <content type="text"><![CDATA[用户useradd12$ useradd test 添加test用户$ useradd test -d /home/test 指定为用户home目录 passwd1$ passwd test 为test设置密码 userdel12$ userdel test$ userdel -r test #删除用户和home目录 usermod 更改用户名 12345$ usermod -l old_name new_name$ usermod -g 用户组 用户名 #强制修改用户所在组$ usermod -a -G 用户组 用户名 #把某个用户添加进某个组 组 当在创建一个新用户user 的时候,若没有指定用户组,那将会创建一个和改用户名同名的私有组. groupadd12$ groupadd public #创建一个名为public 的用户组$ groupadd username -g public #创建用户username指定组为public groupdel1$ groupdel public #删除用户组,删除用户组前必须清空用户组 groupmod 更改组名 1$ groupmod -n old_groupname new_groupname]]></content>
@@ -172,6 +161,17 @@
       </categories>
       <tags>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Java Reflec 反射]]></title>
+    <url>%2F2019%2F03%2F02%2Freflect-reflec%2F</url>
+    <content type="text"><![CDATA[Java reflec 反射[TOC] 反射介绍 反射,是一种计算机处理方式.是程序可以访问,检测修改它本身状态或行为的一种能力.JAVA反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意方法和属性；这种动态获取信息以及动态调用对象方法的功能称为java语言的反射机制。 JAVA反射常用的API123public final class Class&lt;T&gt;extends Objectimplements Serializable, GenericDeclaration, Type, AnnotatedElement Class 类的实例表示正在运行的 Java 应用程序中的类和接口。枚举是一种类，注释是一种接口。 在java.long.reflect包下有三个类 java.lang.reflect.AccessibleObject java.lang.reflect.Constructor&lt;T&gt; java.lang.reflect.Field java.lang.reflect.Method 反射优缺点优点： 反射提高了程序的灵活性和扩展性。 降低耦合性，提高自适应能力。 它允许程序创建和控制任何类的对象，无需提前硬编码目标类。 缺点： 性能问题：使用反射基本上是一种解释操作，用于字段和方法接入时要远慢于直接代码。因此反射机制主要应用在对灵活性和拓展性要求很高的系统框架上，普通程序不建议使用。 使用反射会模糊程序内部逻辑；程序员希望在源代码中看到程序的逻辑，反射却绕过了源代码的技术，因而会带来维护的问题，反射代码比相应的直接代码更复杂。 Class 介绍 Java 中 Class 它可以代表任意类型的类或接口类型 获得Class 获得Class 有3种方式: 123456789//对象引用.getClass();Object obj = new Object();obj.getClass();//类名或接口名直接点属性 .class 获取Object.class;//通过Class类的forname方法获取 .推荐方法Class.forname("java.lang.Object"); 为什么要获取Class对象? 获取类的成员 Constructor Field Method 对象必须先获取Class.通过Class 获取. Constructor java.lang.reflect.Constructor 构造的意思Constructor它描述的单个构造器，我们得到它就可以实例化对象 获取Constructor 返回值 方法名(形式参数) 说明 Constructor &lt;T&gt; getConstructor(Class &lt;T&gt; … parameterTypes) 返回一个 Constructor 对象，它反映此 Class 对象所表示的类的指定公共构造方法。 Constructor &lt;T&gt; [] getConstructors() 返回一个包含某些 Constructor 对象的数组，这些对象反映此 Class 对象所表示的类的所有公共构造方法。 Constructor &lt;T&gt; getDeclaredConstructor(Class &lt;T&gt; … parameterTypes) 返回一个 Constructor 对象，该对象反映此 Class 对象所表示的类或接口的指定构造方法。 Constructor &lt;T&gt;[] getDeclaredClasses() 返回 Class 对象的一个数组，这些对象反映声明为此 Class 对象所表示的类的成员的所有类和接口。 12345678910111213141516//获取public修饰的构造方法getConstructorgetConstructors//获取所有构造方法包括私有getDeclaredConstructorgetDeclaredClasses//得到构造器后就可以实例化对象@param 使用此 Constructor 对象表示的构造方法来创建该构造方法的声明类的新实例，并用指定的初始化参数初始化该实例。public T newInstance(Object... initargs);//如果不是public 需要使用取消检查//将此对象的 accessible 标志设置为指示的布尔值public void setAccessible(boolean flag); // constructor.setAccessible(true); Field java.lang.reflect.Field 它描述的属性对象 获取Field更获取Constructor类似 对Field进行赋值 返回值 方法名(形式参数) 说明 void set(Object obj, Object value) 将指定对象变量上此 Field 对象表示的字段设置为指定的新值。 void setBoolean(Object obj, boolean z) 将字段的值设置为指定对象上的一个 boolean 值。 void setByte(Object obj, byte b) 将字段的值设置为指定对象上的一个 byte 值。 void setChar(Object obj, char c) 将字段的值设置为指定对象上的一个 char 值。 void setDouble(Object obj, double d) 将字段的值设置为指定对象上的一个 double 值。 void setFloat(Object obj, float f) 将字段的值设置为指定对象上的一个 float 值。 void setInt(Object obj, int i) 将字段的值设置为指定对象上的一个 int 值。 void setLong(Object obj, long l) 将字段的值设置为指定对象上的一个 long 值。 void setShort(Object obj, short s) 将字段的值设置为指定对象上的一个 short 值。 对Field取值 返回值 方法名(形式参数) 说明 Object get(Object obj) 返回指定对象上此 Field 表示的字段的值。 也可以使用get加数据类型的方式 例如 getInt(); 如set实例. Method (重点) java.lang.reflect.Method 它描述的是类或接口中的方法 获取Method 对象]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
