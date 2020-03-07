@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[Nginx 转发任意路径到Websocket/ws]]></title>
     <url>%2F2020%2F03%2F07%2FNginx-forward-all-path-to-websockset%2F</url>
-    <content type="text"><![CDATA[前言我需要websocket/ws能接受任意路径并转发 需要Nginx Nginx配置 在 Nginx的nginx.conf配置添加以下然后重启即可 1234567891011location ^~ / &#123; proxy_redirect off; # /ws修改为你的路径 rewrite ^(.*)$ /ws break; # http://127.0.0.1:33684/ 修改为你的IP:PORT proxy_pass http://127.0.0.1:33684/; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $http_host;&#125;]]></content>
+    <content type="text"><![CDATA[前言我需要websocket/ws能接受任意路径并转发,并过滤请求不包含websocket的不做操作 需要Nginx WebSocket 结束任意路径请求 在 Nginx的nginx.conf配置添加以下然后重启即可 1234567891011location ^~ / &#123; proxy_redirect off; # /ws修改为你的路径 rewrite ^(.*)$ /ws break; # http://127.0.0.1:33684 修改为你的IP:PORT proxy_pass http://127.0.0.1:33684; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $http_host;&#125; 再以上的基础上不处理不包含 websocket的请求头 在 Nginx的nginx.conf配置添加以下然后重启即可 12345678910111213141516location ^~ / &#123; proxy_redirect off; if ($http_upgrade != "websocket") &#123; root /data/wwwroot/default; &#125; if ($http_upgrade = "websocket") &#123; # /ws修改为你的路径 rewrite ^(.*)$ /ws break; # http://127.0.0.1:33684 修改为你的IP:PORT proxy_pass http://127.0.0.1:33685; &#125; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $http_host;&#125;]]></content>
       <categories>
         <category>Nginx</category>
       </categories>
