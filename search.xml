@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Nginx 转发任意路径到Websocket/ws]]></title>
+    <title><![CDATA[Nginx 转发任意路径到WebSocket/WS,并过滤非WebSocket请求]]></title>
     <url>%2F2020%2F03%2F07%2FNginx-forward-all-path-to-websockset%2F</url>
-    <content type="text"><![CDATA[前言我需要websocket/ws能接受任意路径并转发,并过滤请求不包含websocket的不做操作 需要Nginx WebSocket 结束任意路径请求 在 Nginx的nginx.conf配置添加以下然后重启即可 1234567891011location ^~ / &#123; proxy_redirect off; # /ws修改为你的路径 rewrite ^(.*)$ /ws break; # http://127.0.0.1:33684 修改为你的IP:PORT proxy_pass http://127.0.0.1:33684; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $http_host;&#125; 再以上的基础上不处理不包含 websocket的请求头 在 Nginx的nginx.conf配置添加以下然后重启即可 12345678910111213141516location ^~ / &#123; proxy_redirect off; if ($http_upgrade != "websocket") &#123; root /data/wwwroot/default; &#125; if ($http_upgrade = "websocket") &#123; # /ws修改为你的路径 rewrite ^(.*)$ /ws break; # http://127.0.0.1:33684 修改为你的IP:PORT proxy_pass http://127.0.0.1:33685; &#125; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $http_host;&#125;]]></content>
+    <content type="text"><![CDATA[前言我需要WebSocket/ws能接受任意路径并转发,并过滤请求不包含WebSocket的不做操作 需要Nginx WebSocket 接收任意路径请求 在 Nginx的nginx.conf配置添加以下然后重启即可 1234567891011location ^~ / &#123; proxy_redirect off; # /ws修改为你的路径 rewrite ^(.*)$ /ws break; # http://127.0.0.1:33684 修改为你的IP:PORT proxy_pass http://127.0.0.1:33684; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $http_host;&#125; 过滤非WebSocket的请求 在 Nginx的nginx.conf配置添加以下然后重启即可 12345678910111213141516location ^~ / &#123; proxy_redirect off; if ($http_upgrade != "websocket") &#123; root /data/wwwroot/default; &#125; if ($http_upgrade = "websocket") &#123; # /ws修改为你的路径 rewrite ^(.*)$ /ws break; # http://127.0.0.1:33684 修改为你的IP:PORT proxy_pass http://127.0.0.1:33685; &#125; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $http_host;&#125;]]></content>
       <categories>
         <category>Nginx</category>
       </categories>
@@ -119,17 +119,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux常用网络操作]]></title>
-    <url>%2F2019%2F03%2F03%2FLinux-network-cmd%2F</url>
-    <content type="text"><![CDATA[主机名配置[TOC] hostname12$ hostname #查看主机名$ hostname name.local #修改主机名 重启无效 永久修改需要配置/etc/sysconfig/network 123$ cat /etc/sysconfig/networkNETWORKING=yesHOSTNAME=localhost.localdomain IP配置setup1$ setup #建立 伪桌面程序 设置IP ifconfig12$ ifconfig #查看IP$ ifconfig eth0(网卡设备) 192.168.1.2 #修改局域网IP 永久修改需要配置/etc/sysconfig/network-scripts/ifcfg-eth0,需要对应参数,修改前可以先启动setup编辑静态IP活的参数 网络服务管理service123456$ service network status #查看指定服务的状态$ service network stop #停止指定服务$ service network start #启动指定服务$ service network restart #重启指定服务$ service --status–all #查看系统中所有后台服务$ netstat –nltp #查看系统中网络进程的端口监听情况 防火墙设置 防火墙配置文件/etc/sysconfig/iptables 1234$ service iptables status 查看防火墙状态$ service iptables stop 关闭防火墙$ service iptables start 启动防火墙$ chkconfig iptables off 禁止防火墙自启]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux for Debian 上传安装软件与包管理]]></title>
     <url>%2F2019%2F03%2F03%2FLinux-for-Debian-Package-Management%2F</url>
     <content type="text"><![CDATA[安装软件[TOC] lrzsz1$ yum install lrzsz rz上传sz下载 安装jdk 卸载open-JDK 123456$ java -vsersion$ rpm -qa | grep java #查询已安装的列表筛选java相关java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.i686$ rpm -e --nodeps java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.i686 # -q 卸载 --nodeps 忽略依赖$ rpm -e --nodeps java-1.7.0-openjdk-1.7.0.79-2.5.5.4.el6.i686 上传并安装JDK 通常软件安装到/usr/local目录 12$ mkdir -p /usr/local/jdk #联级创建jdk目录$ tar -xvf jdk-7u71-linux-i586.tar.gz -C /usr/local/jdk/ #解压到jdk目录 配置环境变量 ‘/etc/profile’此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行. 并从/etc/profile.d目录的配置文件中搜集shell的设置。 123456789$ vi /etc/profile$ cat&gt;/ete/profile&lt;&lt;EOF#set java environmentJAVA_HOME=/usr/local/jdk/jdk1.7.0_71CLASSPATH=.:$JAVA_HOME/lib.tools.jarPATH=$JAVA_HOME/bin:$PATHexport JAVA_HOME CLASSPATH PATHEOF # 写入文件$ source /etc/profile # 刷新配置 安装MySQL上传并解压 12345678$ tar -xvf MySQL-5.6.22-1.el6.i686.rpm-bundle.tar -C ./mysql/MySQL-shared-compat-5.6.22-1.el6.i686.rpmMySQL-server-5.6.22-1.el6.i686.rpmMySQL-client-5.6.22-1.el6.i686.rpmMySQL-devel-5.6.22-1.el6.i686.rpmMySQL-test-5.6.22-1.el6.i686.rpmMySQL-shared-5.6.22-1.el6.i686.rpmMySQL-embedded-5.6.22-1.el6.i686.rpm 将自带的mysql卸载并安装 123456$ rpm -qa | grep mysql #查询mysql-libs-5.1.73-5.el6_6.i686$ rpm -e --nodeps mysql-libs-5.1.73-5.el6_6.i686 #卸载$ rpm -ivh MySQL-server-5.6.22-1.el6.i686.rpm #安装需要安装的A RANDOM PASSWORD HAS BEEN SET FOR THE MySQL root USER !You will find that password in '/root/.mysql_secret'. 安装mysql-client 1$ rpm -ivh MySQL-client-5.6.22-1.el6.i686.rpm 启动服务 12$ service mysql startStarting MySQL. 修改MySQL密码 12345$ cat /root/.mysql_secretLaHsElVtSq02u$ mysql -u -p mysql&gt; set password=password('password');Query OK, 0 rows affected (0.00 sec) 自启动mysql 123$ chkconfig --add mysql #添加自启动$ chkconfig mysql on #开启$ chkconfig # 查询列表 mysql远程访问 123$ chkconfig --add mysql #添加自启动$ chkconfig mysql on #开启$ chkconfig # 查询列表 数据库远程访问开启 12grant all privileges on *.* to &apos;root&apos;@&apos;%&apos; identified by &apos;password&apos;;flush privileges; 关闭防火墙 12345$ /sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT$ /etc/rc.d/init.d/iptables save$ /etc/init.d/iptables status#学习阶段我们也可以直接将防火墙关闭$ service iptables stop;]]></content>
@@ -139,6 +128,17 @@
       <tags>
         <tag>Linux</tag>
         <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux常用网络操作]]></title>
+    <url>%2F2019%2F03%2F03%2FLinux-network-cmd%2F</url>
+    <content type="text"><![CDATA[主机名配置[TOC] hostname12$ hostname #查看主机名$ hostname name.local #修改主机名 重启无效 永久修改需要配置/etc/sysconfig/network 123$ cat /etc/sysconfig/networkNETWORKING=yesHOSTNAME=localhost.localdomain IP配置setup1$ setup #建立 伪桌面程序 设置IP ifconfig12$ ifconfig #查看IP$ ifconfig eth0(网卡设备) 192.168.1.2 #修改局域网IP 永久修改需要配置/etc/sysconfig/network-scripts/ifcfg-eth0,需要对应参数,修改前可以先启动setup编辑静态IP活的参数 网络服务管理service123456$ service network status #查看指定服务的状态$ service network stop #停止指定服务$ service network start #启动指定服务$ service network restart #重启指定服务$ service --status–all #查看系统中所有后台服务$ netstat –nltp #查看系统中网络进程的端口监听情况 防火墙设置 防火墙配置文件/etc/sysconfig/iptables 1234$ service iptables status 查看防火墙状态$ service iptables stop 关闭防火墙$ service iptables start 启动防火墙$ chkconfig iptables off 禁止防火墙自启]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
