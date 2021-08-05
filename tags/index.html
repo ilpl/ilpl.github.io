@@ -943,40 +943,18 @@
 
   
   
-
-  
-
-<link rel="stylesheet" href="/disqus/iDisqus.min.css">
-
-
-  
-
-
 <script>
-  function initialDsq() {
-    var disq = new iDisqus('comments', {
-        forum: 'iilpl',
-        site: 'https://ilpl.me',
-        api: 'https://file.ilpl.me/api/disqus',
-        mode: 1,
-        badge: '博主',
-        timeout: 3000,
-        init: true,
-        emojiPreview: true,
-        emojiPath: '/images/icons/emoji/unicode/'
-    });
-    disq.count();
-  }
-
-  function loadDsqAPI() {
+  function loadCount() {
     var d = document, s = d.createElement('script');
-    s.src = '/disqus/iDisqus.min.js';
-    s.onload = initialDsq;
+    s.src = 'https://iilpl.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
     (d.head || d.body).appendChild(s);
   }
-  
-  window.addEventListener('load', loadDsqAPI, false);
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
 </script>
+
+
 
 
 
