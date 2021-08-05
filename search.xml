@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[VPS套WARP以MARK的方式分流]]></title>
+    <url>%2F2021%2F08%2F15%2FWireGuard-mark%2F</url>
+    <content type="text"><![CDATA[说明为什么不用官方socks5? 因为这socks5还是要转换成tun才可以用.为什么使用使用mark的方式? 以mark的方式适合配合proxy分流使用.不需要转换通过ip rule/ip route就能实现. 安装省略 Wireguard配置Wireguard 配置vim /etc/wireguard/wgcf.conf 123456789101112131415161718[Interface]PrivateKey = +F6Ed8Sr59ySYTn+J4gjAddress = 172.16.0.2/32Address = fd01:5ca1:ab1e:8235:xxxx:xxxx:xxxx:xxxx/128#DNS = 8.8.8.8,2001:4860:4860::8888 # 注释使用系统DNS配置MTU = 1280# 关闭默认添加的配置,修改成添加通过mark来判断路由Table = offPostUp = ip rule add fwmark 22 table 100 ; ip route add 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule add fwmark 22 table 100 ; ip -6 route add ::/0 dev wgcf table 100PostDown = ip rule del fwmark 22 table 100 ; ip route del 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule del fwmark 22 table 100 ; ip -6 route del ::/0 dev wgcf table 100[Peer]PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=AllowedIPs = 0.0.0.0/0AllowedIPs = ::/0#Endpoint = engage.cloudflareclient.com:2408Endpoint = 162.159.192.3:2408 Proxy 配置123456789101112&#123; "protocol": "freedom", "settings": &#123; //"domainStrategy": "UseIPv4" &#125;, "streamSettings": &#123; "sockopt": &#123; "mark": 22 // 跟上边相同的 &#125; &#125;, "tag": "wgcf"&#125;]]></content>
+      <categories>
+        <category>Proxy</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>CloudFlare</tag>
+        <tag>WireGuard</tag>
+        <tag>WARP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[使用iptables过滤DNS污染/抢答]]></title>
     <url>%2F2021%2F08%2F15%2FLInux-iptables-security-dns%2F</url>
     <content type="text"><![CDATA[前言DNS污染基于DNS抢答实现,那么只要过滤掉抢答的DNS就可以无污染. DNS支持的DNS 需要满足3个条件,只要过滤这个3个条件能百分百过滤掉抢答掉DNS IP ID = 0x0000 IP Flags = 0x00 DNS Authoritative = 0 全球DNS 推荐8.8.4.48.8.8.8 台湾DNS101.101.101.101101.102.103.104168.95.1.1168.95.192.1 香港DNS218.102.23.228210.0.255.251210.0.255.250 Linux NAT / Route 平台 12345678910111213141516171819$ ipset create dnsip hash:ip hashsize 64 maxelem 10 &gt;/dev/null 2&gt;&amp;1$ ipset add dnsip 8.8.4.4$ ipset add dnsip 8.8.8.8$ ipset add dnsip 168.95.1.1$ ipset add dnsip 168.95.192.1$ ipset add dnsip 101.101.101.101$ ipset add dnsip 101.102.103.104$ ipset add dnsip 218.102.23.228 # 網上行寬頻 Nevigator BroadBand DNS$ ipset add dnsip 210.0.255.250 # 和記環球電訊 DNS$ ipset add dnsip 210.0.255.251 # 和記環球電訊 DNS$ iptables -N DNS_FILTER$ iptables -F DNS_FILTER$ iptables -A DNS_FILTER -m u32 --u32 "2&amp;0xFFFF=0x0" -j DROP$ iptables -A DNS_FILTER -m u32 --u32 "4&amp;0xFFFF=0x4000" -j DROP$ iptables -A DNS_FILTER -m u32 --u32 "27&amp;0xFF=0x85" -j DROP$ iptables -t filter -I FORWARD -i "入口" -p udp --sport 53 -m set --match-set dnsip src -j DNS_FILTER$ # iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p udp -m udp --dport 53 -m set ! --match-set dnsip dst -j DNAT --to-destination 192.168.1.1 Linux Local 平台 1$ iptables -t filter -A INPUT -i "入口" -p udp --sport 53 -m set --match-set dnsip src -j DNS_FILTER]]></content>
@@ -13,20 +27,6 @@
         <tag>53</tag>
         <tag>iptables</tag>
         <tag>OpenWRT</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[VPS套WARP以MARK的方式分流]]></title>
-    <url>%2F2021%2F08%2F15%2FWireGuard-mark%2F</url>
-    <content type="text"><![CDATA[说明为什么不用官方socks5? 因为这socks5还是要转换成tun才可以用.为什么使用使用mark的方式? 以mark的方式适合配合proxy分流使用.不需要转换通过ip rule/ip route就能实现. 安装省略 Wireguard配置Wireguard 配置vim /etc/wireguard/wgcf.conf 123456789101112131415161718[Interface]PrivateKey = +F6Ed8Sr59ySYTn+J4gjAddress = 172.16.0.2/32Address = fd01:5ca1:ab1e:8235:xxxx:xxxx:xxxx:xxxx/128#DNS = 8.8.8.8,2001:4860:4860::8888 # 注释使用系统DNS配置MTU = 1280# 关闭默认添加的配置,修改成添加通过mark来判断路由Table = offPostUp = ip rule add fwmark 22 table 100 ; ip route add 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule add fwmark 22 table 100 ; ip -6 route add ::/0 dev wgcf table 100PostDown = ip rule del fwmark 22 table 100 ; ip route del 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule del fwmark 22 table 100 ; ip -6 route del ::/0 dev wgcf table 100[Peer]PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=AllowedIPs = 0.0.0.0/0AllowedIPs = ::/0#Endpoint = engage.cloudflareclient.com:2408Endpoint = 162.159.192.3:2408 Proxy 配置123456789101112&#123; "protocol": "freedom", "settings": &#123; //"domainStrategy": "UseIPv4" &#125;, "streamSettings": &#123; "sockopt": &#123; "mark": 22 // 跟上边相同的 &#125; &#125;, "tag": "wgcf"&#125;]]></content>
-      <categories>
-        <category>Proxy</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>CloudFlare</tag>
-        <tag>WireGuard</tag>
-        <tag>WARP</tag>
       </tags>
   </entry>
   <entry>
