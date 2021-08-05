@@ -108,6 +108,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux常用网络操作]]></title>
+    <url>%2F2019%2F03%2F03%2FLinux-network-cmd%2F</url>
+    <content type="text"><![CDATA[主机名配置[TOC] hostname12$ hostname #查看主机名$ hostname name.local #修改主机名 重启无效 永久修改需要配置/etc/sysconfig/network 123$ cat /etc/sysconfig/networkNETWORKING=yesHOSTNAME=localhost.localdomain IP配置setup1$ setup #建立 伪桌面程序 设置IP ifconfig12$ ifconfig #查看IP$ ifconfig eth0(网卡设备) 192.168.1.2 #修改局域网IP 永久修改需要配置/etc/sysconfig/network-scripts/ifcfg-eth0,需要对应参数,修改前可以先启动setup编辑静态IP活的参数 网络服务管理service123456$ service network status #查看指定服务的状态$ service network stop #停止指定服务$ service network start #启动指定服务$ service network restart #重启指定服务$ service --status–all #查看系统中所有后台服务$ netstat –nltp #查看系统中网络进程的端口监听情况 防火墙设置 防火墙配置文件/etc/sysconfig/iptables 1234$ service iptables status 查看防火墙状态$ service iptables stop 关闭防火墙$ service iptables start 启动防火墙$ chkconfig iptables off 禁止防火墙自启]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Markdown 尖括号]]></title>
     <url>%2F2019%2F03%2F03%2FMarkdown-Angle-brackets%2F</url>
     <content type="text"><![CDATA[Markdown 尖括号 在markdown 中 &lt;&gt; 会被识别成html使用无法使用需要使用转义字符 例如 &lt;T&gt;]]></content>
@@ -131,9 +142,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux常用网络操作]]></title>
-    <url>%2F2019%2F03%2F03%2FLinux-network-cmd%2F</url>
-    <content type="text"><![CDATA[主机名配置[TOC] hostname12$ hostname #查看主机名$ hostname name.local #修改主机名 重启无效 永久修改需要配置/etc/sysconfig/network 123$ cat /etc/sysconfig/networkNETWORKING=yesHOSTNAME=localhost.localdomain IP配置setup1$ setup #建立 伪桌面程序 设置IP ifconfig12$ ifconfig #查看IP$ ifconfig eth0(网卡设备) 192.168.1.2 #修改局域网IP 永久修改需要配置/etc/sysconfig/network-scripts/ifcfg-eth0,需要对应参数,修改前可以先启动setup编辑静态IP活的参数 网络服务管理service123456$ service network status #查看指定服务的状态$ service network stop #停止指定服务$ service network start #启动指定服务$ service network restart #重启指定服务$ service --status–all #查看系统中所有后台服务$ netstat –nltp #查看系统中网络进程的端口监听情况 防火墙设置 防火墙配置文件/etc/sysconfig/iptables 1234$ service iptables status 查看防火墙状态$ service iptables stop 关闭防火墙$ service iptables start 启动防火墙$ chkconfig iptables off 禁止防火墙自启]]></content>
+    <title><![CDATA[Linux 用户和组]]></title>
+    <url>%2F2019%2F03%2F02%2FLinux-user-and-group%2F</url>
+    <content type="text"><![CDATA[用户useradd12$ useradd test 添加test用户$ useradd test -d /home/test 指定为用户home目录 passwd1$ passwd test 为test设置密码 userdel12$ userdel test$ userdel -r test #删除用户和home目录 usermod 更改用户名 12345$ usermod -l old_name new_name$ usermod -g 用户组 用户名 #强制修改用户所在组$ usermod -a -G 用户组 用户名 #把某个用户添加进某个组 组 当在创建一个新用户user 的时候,若没有指定用户组,那将会创建一个和改用户名同名的私有组. groupadd12$ groupadd public #创建一个名为public 的用户组$ groupadd username -g public #创建用户username指定组为public groupdel1$ groupdel public #删除用户组,删除用户组前必须清空用户组 groupmod 更改组名 1$ groupmod -n old_groupname new_groupname]]></content>
       <categories>
         <category>Linux</category>
       </categories>
@@ -161,17 +172,6 @@
       </categories>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux 用户和组]]></title>
-    <url>%2F2019%2F03%2F02%2FLinux-user-and-group%2F</url>
-    <content type="text"><![CDATA[用户useradd12$ useradd test 添加test用户$ useradd test -d /home/test 指定为用户home目录 passwd1$ passwd test 为test设置密码 userdel12$ userdel test$ userdel -r test #删除用户和home目录 usermod 更改用户名 12345$ usermod -l old_name new_name$ usermod -g 用户组 用户名 #强制修改用户所在组$ usermod -a -G 用户组 用户名 #把某个用户添加进某个组 组 当在创建一个新用户user 的时候,若没有指定用户组,那将会创建一个和改用户名同名的私有组. groupadd12$ groupadd public #创建一个名为public 的用户组$ groupadd username -g public #创建用户username指定组为public groupdel1$ groupdel public #删除用户组,删除用户组前必须清空用户组 groupmod 更改组名 1$ groupmod -n old_groupname new_groupname]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
