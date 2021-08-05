@@ -17,37 +17,6 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>VPS套WARP以MARK的方式</title>
-    <link href="https://ilpl.me/2021/08/15/WireGuard-mark/"/>
-    <id>https://ilpl.me/2021/08/15/WireGuard-mark/</id>
-    <published>2021-08-14T16:00:00.000Z</published>
-    <updated>2021-08-14T16:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>为什么不用官方socks5? 因为这socks5还是要转换成tun才可以用.<br>为什么使用使用mark的方式? 以mark的方式适合配合proxy分流使用.不需要转换通过ip rule/ip route就能实现.</p><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>省略</p><h2 id="Wireguard"><a href="#Wireguard" class="headerlink" title="Wireguard"></a>Wireguard</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="Wireguard-配置"><a href="#Wireguard-配置" class="headerlink" title="Wireguard 配置"></a>Wireguard 配置</h4><p>vim /etc/wireguard/wgcf.conf</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[Interface]</span><br><span class="line">PrivateKey = +F6Ed8Sr59ySYTn+J4gj</span><br><span class="line">Address = 172.16.0.2/32</span><br><span class="line">Address = fd01:5ca1:ab1e:8235:xxxx:xxxx:xxxx:xxxx/128</span><br><span class="line">#DNS = 8.8.8.8,2001:4860:4860::8888  # 注释使用系统DNS配置</span><br><span class="line">MTU = 1280</span><br><span class="line"></span><br><span class="line"># 关闭默认添加的配置,修改成添加通过mark来判断路由</span><br><span class="line">Table = off</span><br><span class="line">PostUp = ip rule add fwmark 22 table 100 ; ip route add 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule add fwmark 22 table 100 ; ip -6 route add ::/0 dev wgcf table 100</span><br><span class="line">PostDown = ip rule del fwmark 22 table 100 ; ip route del 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule del fwmark 22 table 100 ; ip -6 route del ::/0 dev wgcf table 100</span><br><span class="line"></span><br><span class="line">[Peer]</span><br><span class="line">PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=</span><br><span class="line">AllowedIPs = 0.0.0.0/0</span><br><span class="line">AllowedIPs = ::/0</span><br><span class="line">#Endpoint = engage.cloudflareclient.com:2408</span><br><span class="line">Endpoint = 162.159.192.3:2408</span><br></pre></td></tr></table></figure><h4 id="Proxy-配置"><a href="#Proxy-配置" class="headerlink" title="Proxy 配置"></a>Proxy 配置</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"protocol"</span>: <span class="string">"freedom"</span>,</span><br><span class="line">    <span class="attr">"settings"</span>: &#123;</span><br><span class="line">        //"domainStrategy": "UseIPv4"</span><br><span class="line">    &#125;,</span><br><span class="line">    "streamSettings": &#123;</span><br><span class="line">        "sockopt": &#123;</span><br><span class="line">            "mark": 22 // 跟上边相同的</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    "tag": "wgcf"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;headerlink&quot; title=&quot;说明&quot;&gt;&lt;/a&gt;说明&lt;/h2&gt;&lt;p&gt;为什么不用官方socks5? 因为这socks5还是要转换成tun才可以用.&lt;br&gt;为什么使用使用mark的方式? 以mark的方式适合配合
-      
-    
-    </summary>
-    
-      <category term="Proxy" scheme="https://ilpl.me/categories/Proxy/"/>
-    
-    
-      <category term="Linux" scheme="https://ilpl.me/tags/Linux/"/>
-    
-      <category term="CloudFlare" scheme="https://ilpl.me/tags/CloudFlare/"/>
-    
-      <category term="WireGuard" scheme="https://ilpl.me/tags/WireGuard/"/>
-    
-      <category term="WARP" scheme="https://ilpl.me/tags/WARP/"/>
-    
-  </entry>
-  
-  <entry>
     <title>使用iptables过滤DNS污染/抢答</title>
     <link href="https://ilpl.me/2021/08/15/LInux-iptables-security-dns/"/>
     <id>https://ilpl.me/2021/08/15/LInux-iptables-security-dns/</id>
@@ -78,6 +47,37 @@
       <category term="iptables" scheme="https://ilpl.me/tags/iptables/"/>
     
       <category term="OpenWRT" scheme="https://ilpl.me/tags/OpenWRT/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>VPS套WARP以MARK的方式分流</title>
+    <link href="https://ilpl.me/2021/08/15/WireGuard-mark/"/>
+    <id>https://ilpl.me/2021/08/15/WireGuard-mark/</id>
+    <published>2021-08-14T16:00:00.000Z</published>
+    <updated>2021-08-14T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>为什么不用官方socks5? 因为这socks5还是要转换成tun才可以用.<br>为什么使用使用mark的方式? 以mark的方式适合配合proxy分流使用.不需要转换通过ip rule/ip route就能实现.</p><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>省略</p><h2 id="Wireguard"><a href="#Wireguard" class="headerlink" title="Wireguard"></a>Wireguard</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="Wireguard-配置"><a href="#Wireguard-配置" class="headerlink" title="Wireguard 配置"></a>Wireguard 配置</h4><p>vim /etc/wireguard/wgcf.conf</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[Interface]</span><br><span class="line">PrivateKey = +F6Ed8Sr59ySYTn+J4gj</span><br><span class="line">Address = 172.16.0.2/32</span><br><span class="line">Address = fd01:5ca1:ab1e:8235:xxxx:xxxx:xxxx:xxxx/128</span><br><span class="line">#DNS = 8.8.8.8,2001:4860:4860::8888  # 注释使用系统DNS配置</span><br><span class="line">MTU = 1280</span><br><span class="line"></span><br><span class="line"># 关闭默认添加的配置,修改成添加通过mark来判断路由</span><br><span class="line">Table = off</span><br><span class="line">PostUp = ip rule add fwmark 22 table 100 ; ip route add 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule add fwmark 22 table 100 ; ip -6 route add ::/0 dev wgcf table 100</span><br><span class="line">PostDown = ip rule del fwmark 22 table 100 ; ip route del 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule del fwmark 22 table 100 ; ip -6 route del ::/0 dev wgcf table 100</span><br><span class="line"></span><br><span class="line">[Peer]</span><br><span class="line">PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=</span><br><span class="line">AllowedIPs = 0.0.0.0/0</span><br><span class="line">AllowedIPs = ::/0</span><br><span class="line">#Endpoint = engage.cloudflareclient.com:2408</span><br><span class="line">Endpoint = 162.159.192.3:2408</span><br></pre></td></tr></table></figure><h4 id="Proxy-配置"><a href="#Proxy-配置" class="headerlink" title="Proxy 配置"></a>Proxy 配置</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"protocol"</span>: <span class="string">"freedom"</span>,</span><br><span class="line">    <span class="attr">"settings"</span>: &#123;</span><br><span class="line">        //"domainStrategy": "UseIPv4"</span><br><span class="line">    &#125;,</span><br><span class="line">    "streamSettings": &#123;</span><br><span class="line">        "sockopt": &#123;</span><br><span class="line">            "mark": 22 // 跟上边相同的</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    "tag": "wgcf"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;说明&quot;&gt;&lt;a href=&quot;#说明&quot; class=&quot;headerlink&quot; title=&quot;说明&quot;&gt;&lt;/a&gt;说明&lt;/h2&gt;&lt;p&gt;为什么不用官方socks5? 因为这socks5还是要转换成tun才可以用.&lt;br&gt;为什么使用使用mark的方式? 以mark的方式适合配合
+      
+    
+    </summary>
+    
+      <category term="Proxy" scheme="https://ilpl.me/categories/Proxy/"/>
+    
+    
+      <category term="Linux" scheme="https://ilpl.me/tags/Linux/"/>
+    
+      <category term="CloudFlare" scheme="https://ilpl.me/tags/CloudFlare/"/>
+    
+      <category term="WireGuard" scheme="https://ilpl.me/tags/WireGuard/"/>
+    
+      <category term="WARP" scheme="https://ilpl.me/tags/WARP/"/>
     
   </entry>
   
@@ -339,6 +339,32 @@
   </entry>
   
   <entry>
+    <title>Linux常用网络操作</title>
+    <link href="https://ilpl.me/2019/03/03/Linux-network-cmd/"/>
+    <id>https://ilpl.me/2019/03/03/Linux-network-cmd/</id>
+    <published>2019-03-02T16:00:00.000Z</published>
+    <updated>2019-03-02T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="主机名配置"><a href="#主机名配置" class="headerlink" title="主机名配置"></a>主机名配置</h2><p>[TOC]</p><h3 id="hostname"><a href="#hostname" class="headerlink" title="hostname"></a>hostname</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hostname <span class="comment">#查看主机名</span></span><br><span class="line">$ hostname name.local <span class="comment">#修改主机名 重启无效</span></span><br></pre></td></tr></table></figure><blockquote><p>永久修改需要配置<code>/etc/sysconfig/network</code></p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/sysconfig/network</span><br><span class="line">NETWORKING=yes</span><br><span class="line">HOSTNAME=localhost.localdomain</span><br></pre></td></tr></table></figure><h2 id="IP配置"><a href="#IP配置" class="headerlink" title="IP配置"></a>IP配置</h2><h3 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ setup <span class="comment">#建立 伪桌面程序 设置IP</span></span><br></pre></td></tr></table></figure><h3 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig <span class="comment">#查看IP</span></span><br><span class="line">$ ifconfig eth0(网卡设备) 192.168.1.2 <span class="comment">#修改局域网IP</span></span><br></pre></td></tr></table></figure><blockquote><p>永久修改需要配置<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code>,需要对应参数,修改前可以先启动<code>setup</code>编辑静态IP活的参数</p></blockquote><h2 id="网络服务管理"><a href="#网络服务管理" class="headerlink" title="网络服务管理"></a>网络服务管理</h2><h3 id="service"><a href="#service" class="headerlink" title="service"></a>service</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ service network status <span class="comment">#查看指定服务的状态</span></span><br><span class="line">$ service network stop <span class="comment">#停止指定服务</span></span><br><span class="line">$ service network start <span class="comment">#启动指定服务</span></span><br><span class="line">$ service network restart <span class="comment">#重启指定服务</span></span><br><span class="line">$ service --status–all <span class="comment">#查看系统中所有后台服务</span></span><br><span class="line">$ netstat –nltp <span class="comment">#查看系统中网络进程的端口监听情况</span></span><br></pre></td></tr></table></figure><h3 id="防火墙设置"><a href="#防火墙设置" class="headerlink" title="防火墙设置"></a>防火墙设置</h3><blockquote><p>防火墙配置文件<code>/etc/sysconfig/iptables</code></p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ service iptables status 查看防火墙状态</span><br><span class="line">$ service iptables stop 关闭防火墙</span><br><span class="line">$ service iptables start 启动防火墙</span><br><span class="line">$ chkconfig  iptables off 禁止防火墙自启</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;主机名配置&quot;&gt;&lt;a href=&quot;#主机名配置&quot; class=&quot;headerlink&quot; title=&quot;主机名配置&quot;&gt;&lt;/a&gt;主机名配置&lt;/h2&gt;&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h3 id=&quot;hostname&quot;&gt;&lt;a href=&quot;#hostname&quot; class=&quot;hea
+      
+    
+    </summary>
+    
+      <category term="Linux" scheme="https://ilpl.me/categories/Linux/"/>
+    
+    
+      <category term="Linux" scheme="https://ilpl.me/tags/Linux/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Linux for Debian 上传安装软件与包管理</title>
     <link href="https://ilpl.me/2019/03/03/Linux-for-Debian-Package-Management/"/>
     <id>https://ilpl.me/2019/03/03/Linux-for-Debian-Package-Management/</id>
@@ -389,32 +415,6 @@
     
     
       <category term="Markdown" scheme="https://ilpl.me/tags/Markdown/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linux常用网络操作</title>
-    <link href="https://ilpl.me/2019/03/03/Linux-network-cmd/"/>
-    <id>https://ilpl.me/2019/03/03/Linux-network-cmd/</id>
-    <published>2019-03-02T16:00:00.000Z</published>
-    <updated>2019-03-02T16:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="主机名配置"><a href="#主机名配置" class="headerlink" title="主机名配置"></a>主机名配置</h2><p>[TOC]</p><h3 id="hostname"><a href="#hostname" class="headerlink" title="hostname"></a>hostname</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hostname <span class="comment">#查看主机名</span></span><br><span class="line">$ hostname name.local <span class="comment">#修改主机名 重启无效</span></span><br></pre></td></tr></table></figure><blockquote><p>永久修改需要配置<code>/etc/sysconfig/network</code></p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat /etc/sysconfig/network</span><br><span class="line">NETWORKING=yes</span><br><span class="line">HOSTNAME=localhost.localdomain</span><br></pre></td></tr></table></figure><h2 id="IP配置"><a href="#IP配置" class="headerlink" title="IP配置"></a>IP配置</h2><h3 id="setup"><a href="#setup" class="headerlink" title="setup"></a>setup</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ setup <span class="comment">#建立 伪桌面程序 设置IP</span></span><br></pre></td></tr></table></figure><h3 id="ifconfig"><a href="#ifconfig" class="headerlink" title="ifconfig"></a>ifconfig</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ifconfig <span class="comment">#查看IP</span></span><br><span class="line">$ ifconfig eth0(网卡设备) 192.168.1.2 <span class="comment">#修改局域网IP</span></span><br></pre></td></tr></table></figure><blockquote><p>永久修改需要配置<code>/etc/sysconfig/network-scripts/ifcfg-eth0</code>,需要对应参数,修改前可以先启动<code>setup</code>编辑静态IP活的参数</p></blockquote><h2 id="网络服务管理"><a href="#网络服务管理" class="headerlink" title="网络服务管理"></a>网络服务管理</h2><h3 id="service"><a href="#service" class="headerlink" title="service"></a>service</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ service network status <span class="comment">#查看指定服务的状态</span></span><br><span class="line">$ service network stop <span class="comment">#停止指定服务</span></span><br><span class="line">$ service network start <span class="comment">#启动指定服务</span></span><br><span class="line">$ service network restart <span class="comment">#重启指定服务</span></span><br><span class="line">$ service --status–all <span class="comment">#查看系统中所有后台服务</span></span><br><span class="line">$ netstat –nltp <span class="comment">#查看系统中网络进程的端口监听情况</span></span><br></pre></td></tr></table></figure><h3 id="防火墙设置"><a href="#防火墙设置" class="headerlink" title="防火墙设置"></a>防火墙设置</h3><blockquote><p>防火墙配置文件<code>/etc/sysconfig/iptables</code></p></blockquote><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ service iptables status 查看防火墙状态</span><br><span class="line">$ service iptables stop 关闭防火墙</span><br><span class="line">$ service iptables start 启动防火墙</span><br><span class="line">$ chkconfig  iptables off 禁止防火墙自启</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;主机名配置&quot;&gt;&lt;a href=&quot;#主机名配置&quot; class=&quot;headerlink&quot; title=&quot;主机名配置&quot;&gt;&lt;/a&gt;主机名配置&lt;/h2&gt;&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h3 id=&quot;hostname&quot;&gt;&lt;a href=&quot;#hostname&quot; class=&quot;hea
-      
-    
-    </summary>
-    
-      <category term="Linux" scheme="https://ilpl.me/categories/Linux/"/>
-    
-    
-      <category term="Linux" scheme="https://ilpl.me/tags/Linux/"/>
     
   </entry>
   

@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[VPS套WARP以MARK的方式]]></title>
-    <url>%2F2021%2F08%2F15%2FWireGuard-mark%2F</url>
-    <content type="text"><![CDATA[说明为什么不用官方socks5? 因为这socks5还是要转换成tun才可以用.为什么使用使用mark的方式? 以mark的方式适合配合proxy分流使用.不需要转换通过ip rule/ip route就能实现. 安装省略 Wireguard配置Wireguard 配置vim /etc/wireguard/wgcf.conf 123456789101112131415161718[Interface]PrivateKey = +F6Ed8Sr59ySYTn+J4gjAddress = 172.16.0.2/32Address = fd01:5ca1:ab1e:8235:xxxx:xxxx:xxxx:xxxx/128#DNS = 8.8.8.8,2001:4860:4860::8888 # 注释使用系统DNS配置MTU = 1280# 关闭默认添加的配置,修改成添加通过mark来判断路由Table = offPostUp = ip rule add fwmark 22 table 100 ; ip route add 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule add fwmark 22 table 100 ; ip -6 route add ::/0 dev wgcf table 100PostDown = ip rule del fwmark 22 table 100 ; ip route del 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule del fwmark 22 table 100 ; ip -6 route del ::/0 dev wgcf table 100[Peer]PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=AllowedIPs = 0.0.0.0/0AllowedIPs = ::/0#Endpoint = engage.cloudflareclient.com:2408Endpoint = 162.159.192.3:2408 Proxy 配置123456789101112&#123; "protocol": "freedom", "settings": &#123; //"domainStrategy": "UseIPv4" &#125;, "streamSettings": &#123; "sockopt": &#123; "mark": 22 // 跟上边相同的 &#125; &#125;, "tag": "wgcf"&#125;]]></content>
-      <categories>
-        <category>Proxy</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>CloudFlare</tag>
-        <tag>WireGuard</tag>
-        <tag>WARP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[使用iptables过滤DNS污染/抢答]]></title>
     <url>%2F2021%2F08%2F15%2FLInux-iptables-security-dns%2F</url>
     <content type="text"><![CDATA[前言DNS污染基于DNS抢答实现,那么只要过滤掉抢答的DNS就可以无污染. DNS支持的DNS 需要满足3个条件,只要过滤这个3个条件能百分百过滤掉抢答掉DNS IP ID = 0x0000 IP Flags = 0x00 DNS Authoritative = 0 全球DNS 推荐8.8.4.48.8.8.8 台湾DNS101.101.101.101101.102.103.104168.95.1.1168.95.192.1 香港DNS218.102.23.228210.0.255.251210.0.255.250 Linux NAT / Route 平台 12345678910111213141516171819$ ipset create dnsip hash:ip hashsize 64 maxelem 10 &gt;/dev/null 2&gt;&amp;1$ ipset add dnsip 8.8.4.4$ ipset add dnsip 8.8.8.8$ ipset add dnsip 168.95.1.1$ ipset add dnsip 168.95.192.1$ ipset add dnsip 101.101.101.101$ ipset add dnsip 101.102.103.104$ ipset add dnsip 218.102.23.228 # 網上行寬頻 Nevigator BroadBand DNS$ ipset add dnsip 210.0.255.250 # 和記環球電訊 DNS$ ipset add dnsip 210.0.255.251 # 和記環球電訊 DNS$ iptables -N DNS_FILTER$ iptables -F DNS_FILTER$ iptables -A DNS_FILTER -m u32 --u32 "2&amp;0xFFFF=0x0" -j DROP$ iptables -A DNS_FILTER -m u32 --u32 "4&amp;0xFFFF=0x4000" -j DROP$ iptables -A DNS_FILTER -m u32 --u32 "27&amp;0xFF=0x85" -j DROP$ iptables -t filter -I FORWARD -i "入口" -p udp --sport 53 -m set --match-set dnsip src -j DNS_FILTER$ # iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p udp -m udp --dport 53 -m set ! --match-set dnsip dst -j DNAT --to-destination 192.168.1.1 Linux Local 平台 1$ iptables -t filter -A INPUT -i "入口" -p udp --sport 53 -m set --match-set dnsip src -j DNS_FILTER]]></content>
@@ -27,6 +13,20 @@
         <tag>53</tag>
         <tag>iptables</tag>
         <tag>OpenWRT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[VPS套WARP以MARK的方式分流]]></title>
+    <url>%2F2021%2F08%2F15%2FWireGuard-mark%2F</url>
+    <content type="text"><![CDATA[说明为什么不用官方socks5? 因为这socks5还是要转换成tun才可以用.为什么使用使用mark的方式? 以mark的方式适合配合proxy分流使用.不需要转换通过ip rule/ip route就能实现. 安装省略 Wireguard配置Wireguard 配置vim /etc/wireguard/wgcf.conf 123456789101112131415161718[Interface]PrivateKey = +F6Ed8Sr59ySYTn+J4gjAddress = 172.16.0.2/32Address = fd01:5ca1:ab1e:8235:xxxx:xxxx:xxxx:xxxx/128#DNS = 8.8.8.8,2001:4860:4860::8888 # 注释使用系统DNS配置MTU = 1280# 关闭默认添加的配置,修改成添加通过mark来判断路由Table = offPostUp = ip rule add fwmark 22 table 100 ; ip route add 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule add fwmark 22 table 100 ; ip -6 route add ::/0 dev wgcf table 100PostDown = ip rule del fwmark 22 table 100 ; ip route del 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule del fwmark 22 table 100 ; ip -6 route del ::/0 dev wgcf table 100[Peer]PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=AllowedIPs = 0.0.0.0/0AllowedIPs = ::/0#Endpoint = engage.cloudflareclient.com:2408Endpoint = 162.159.192.3:2408 Proxy 配置123456789101112&#123; "protocol": "freedom", "settings": &#123; //"domainStrategy": "UseIPv4" &#125;, "streamSettings": &#123; "sockopt": &#123; "mark": 22 // 跟上边相同的 &#125; &#125;, "tag": "wgcf"&#125;]]></content>
+      <categories>
+        <category>Proxy</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>CloudFlare</tag>
+        <tag>WireGuard</tag>
+        <tag>WARP</tag>
       </tags>
   </entry>
   <entry>
@@ -137,6 +137,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Linux常用网络操作]]></title>
+    <url>%2F2019%2F03%2F03%2FLinux-network-cmd%2F</url>
+    <content type="text"><![CDATA[主机名配置[TOC] hostname12$ hostname #查看主机名$ hostname name.local #修改主机名 重启无效 永久修改需要配置/etc/sysconfig/network 123$ cat /etc/sysconfig/networkNETWORKING=yesHOSTNAME=localhost.localdomain IP配置setup1$ setup #建立 伪桌面程序 设置IP ifconfig12$ ifconfig #查看IP$ ifconfig eth0(网卡设备) 192.168.1.2 #修改局域网IP 永久修改需要配置/etc/sysconfig/network-scripts/ifcfg-eth0,需要对应参数,修改前可以先启动setup编辑静态IP活的参数 网络服务管理service123456$ service network status #查看指定服务的状态$ service network stop #停止指定服务$ service network start #启动指定服务$ service network restart #重启指定服务$ service --status–all #查看系统中所有后台服务$ netstat –nltp #查看系统中网络进程的端口监听情况 防火墙设置 防火墙配置文件/etc/sysconfig/iptables 1234$ service iptables status 查看防火墙状态$ service iptables stop 关闭防火墙$ service iptables start 启动防火墙$ chkconfig iptables off 禁止防火墙自启]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Linux for Debian 上传安装软件与包管理]]></title>
     <url>%2F2019%2F03%2F03%2FLinux-for-Debian-Package-Management%2F</url>
     <content type="text"><![CDATA[安装软件[TOC] lrzsz1$ yum install lrzsz rz上传sz下载 安装jdk 卸载open-JDK 123456$ java -vsersion$ rpm -qa | grep java #查询已安装的列表筛选java相关java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.i686$ rpm -e --nodeps java-1.6.0-openjdk-1.6.0.35-1.13.7.1.el6_6.i686 # -q 卸载 --nodeps 忽略依赖$ rpm -e --nodeps java-1.7.0-openjdk-1.7.0.79-2.5.5.4.el6.i686 上传并安装JDK 通常软件安装到/usr/local目录 12$ mkdir -p /usr/local/jdk #联级创建jdk目录$ tar -xvf jdk-7u71-linux-i586.tar.gz -C /usr/local/jdk/ #解压到jdk目录 配置环境变量 ‘/etc/profile’此文件为系统的每个用户设置环境信息,当用户第一次登录时,该文件被执行. 并从/etc/profile.d目录的配置文件中搜集shell的设置。 123456789$ vi /etc/profile$ cat&gt;/ete/profile&lt;&lt;EOF#set java environmentJAVA_HOME=/usr/local/jdk/jdk1.7.0_71CLASSPATH=.:$JAVA_HOME/lib.tools.jarPATH=$JAVA_HOME/bin:$PATHexport JAVA_HOME CLASSPATH PATHEOF # 写入文件$ source /etc/profile # 刷新配置 安装MySQL上传并解压 12345678$ tar -xvf MySQL-5.6.22-1.el6.i686.rpm-bundle.tar -C ./mysql/MySQL-shared-compat-5.6.22-1.el6.i686.rpmMySQL-server-5.6.22-1.el6.i686.rpmMySQL-client-5.6.22-1.el6.i686.rpmMySQL-devel-5.6.22-1.el6.i686.rpmMySQL-test-5.6.22-1.el6.i686.rpmMySQL-shared-5.6.22-1.el6.i686.rpmMySQL-embedded-5.6.22-1.el6.i686.rpm 将自带的mysql卸载并安装 123456$ rpm -qa | grep mysql #查询mysql-libs-5.1.73-5.el6_6.i686$ rpm -e --nodeps mysql-libs-5.1.73-5.el6_6.i686 #卸载$ rpm -ivh MySQL-server-5.6.22-1.el6.i686.rpm #安装需要安装的A RANDOM PASSWORD HAS BEEN SET FOR THE MySQL root USER !You will find that password in '/root/.mysql_secret'. 安装mysql-client 1$ rpm -ivh MySQL-client-5.6.22-1.el6.i686.rpm 启动服务 12$ service mysql startStarting MySQL. 修改MySQL密码 12345$ cat /root/.mysql_secretLaHsElVtSq02u$ mysql -u -p mysql&gt; set password=password('password');Query OK, 0 rows affected (0.00 sec) 自启动mysql 123$ chkconfig --add mysql #添加自启动$ chkconfig mysql on #开启$ chkconfig # 查询列表 mysql远程访问 123$ chkconfig --add mysql #添加自启动$ chkconfig mysql on #开启$ chkconfig # 查询列表 数据库远程访问开启 12grant all privileges on *.* to &apos;root&apos;@&apos;%&apos; identified by &apos;password&apos;;flush privileges; 关闭防火墙 12345$ /sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT$ /etc/rc.d/init.d/iptables save$ /etc/init.d/iptables status#学习阶段我们也可以直接将防火墙关闭$ service iptables stop;]]></content>
@@ -157,17 +168,6 @@
       </categories>
       <tags>
         <tag>Markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Linux常用网络操作]]></title>
-    <url>%2F2019%2F03%2F03%2FLinux-network-cmd%2F</url>
-    <content type="text"><![CDATA[主机名配置[TOC] hostname12$ hostname #查看主机名$ hostname name.local #修改主机名 重启无效 永久修改需要配置/etc/sysconfig/network 123$ cat /etc/sysconfig/networkNETWORKING=yesHOSTNAME=localhost.localdomain IP配置setup1$ setup #建立 伪桌面程序 设置IP ifconfig12$ ifconfig #查看IP$ ifconfig eth0(网卡设备) 192.168.1.2 #修改局域网IP 永久修改需要配置/etc/sysconfig/network-scripts/ifcfg-eth0,需要对应参数,修改前可以先启动setup编辑静态IP活的参数 网络服务管理service123456$ service network status #查看指定服务的状态$ service network stop #停止指定服务$ service network start #启动指定服务$ service network restart #重启指定服务$ service --status–all #查看系统中所有后台服务$ netstat –nltp #查看系统中网络进程的端口监听情况 防火墙设置 防火墙配置文件/etc/sysconfig/iptables 1234$ service iptables status 查看防火墙状态$ service iptables stop 关闭防火墙$ service iptables start 启动防火墙$ chkconfig iptables off 禁止防火墙自启]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
