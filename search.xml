@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[使用iptables过滤DNS污染/抢答]]></title>
+    <url>%2F2021%2F08%2F15%2FLInux-iptables-security-dns%2F</url>
+    <content type="text"><![CDATA[前言DNS污染基于DNS抢答实现,那么只要过滤掉抢答的DNS就可以无污染. DNS支持的DNS 需要满足3个条件,只要过滤这个3个条件能百分百过滤掉抢答掉DNS IP ID = 0x0000 IP Flags = 0x00 DNS Authoritative = 0 全球DNS 推荐8.8.4.48.8.8.8 台湾DNS101.101.101.101101.102.103.104168.95.1.1168.95.192.1 香港DNS218.102.23.228210.0.255.251210.0.255.250 Linux NAT / Route 平台 12345678910111213141516171819$ ipset create dnsip hash:ip hashsize 64 maxelem 10 &gt;/dev/null 2&gt;&amp;1$ ipset add dnsip 8.8.4.4$ ipset add dnsip 8.8.8.8$ ipset add dnsip 168.95.1.1$ ipset add dnsip 168.95.192.1$ ipset add dnsip 101.101.101.101$ ipset add dnsip 101.102.103.104$ ipset add dnsip 218.102.23.228 # 網上行寬頻 Nevigator BroadBand DNS$ ipset add dnsip 210.0.255.250 # 和記環球電訊 DNS$ ipset add dnsip 210.0.255.251 # 和記環球電訊 DNS$ iptables -N DNS_FILTER$ iptables -F DNS_FILTER$ iptables -A DNS_FILTER -m u32 --u32 "2&amp;0xFFFF=0x0" -j DROP$ iptables -A DNS_FILTER -m u32 --u32 "4&amp;0xFFFF=0x4000" -j DROP$ iptables -A DNS_FILTER -m u32 --u32 "27&amp;0xFF=0x85" -j DROP$ iptables -t filter -I FORWARD -i "入口" -p udp --sport 53 -m set --match-set dnsip src -j DNS_FILTER$ # iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p udp -m udp --dport 53 -m set ! --match-set dnsip dst -j DNAT --to-destination 192.168.1.1 Linux Local 平台 1$ iptables -t filter -A INPUT -i "入口" -p udp --sport 53 -m set --match-set dnsip src -j DNS_FILTER]]></content>
+      <categories>
+        <category>DNS</category>
+      </categories>
+      <tags>
+        <tag>DNS</tag>
+        <tag>无污染DNS</tag>
+        <tag>53</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Nginx 转发任意路径到WebSocket/WS,并过滤非WebSocket请求]]></title>
     <url>%2F2020%2F03%2F07%2FNginx-forward-all-path-to-websockset%2F</url>
     <content type="text"><![CDATA[前言我需要WebSocket/ws能接受任意路径并转发,并过滤请求不包含WebSocket的不做操作 需要Nginx WebSocket 接收任意路径请求 在 Nginx的nginx.conf配置添加以下然后重启即可 1234567891011location ^~ / &#123; proxy_redirect off; # /ws修改为你的路径 rewrite ^(.*)$ /ws break; # http://127.0.0.1:33684 修改为你的IP:PORT proxy_pass http://127.0.0.1:33684; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $http_host;&#125; 过滤非WebSocket的请求 在 Nginx的nginx.conf配置添加以下然后重启即可 12345678910111213141516location ^~ / &#123; proxy_redirect off; if ($http_upgrade != "websocket") &#123; #root /data/wwwroot/default; &#125; if ($http_upgrade = "websocket") &#123; # /ws修改为你的路径 rewrite ^(.*)$ /ws break; # http://127.0.0.1:33684 修改为你的IP:PORT proxy_pass http://127.0.0.1:33685; &#125; proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade"; proxy_set_header Host $http_host;&#125; 测试 测试网站 http://18.140.58.61/]]></content>
@@ -108,17 +121,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Linux常用网络操作]]></title>
-    <url>%2F2019%2F03%2F03%2FLinux-network-cmd%2F</url>
-    <content type="text"><![CDATA[主机名配置[TOC] hostname12$ hostname #查看主机名$ hostname name.local #修改主机名 重启无效 永久修改需要配置/etc/sysconfig/network 123$ cat /etc/sysconfig/networkNETWORKING=yesHOSTNAME=localhost.localdomain IP配置setup1$ setup #建立 伪桌面程序 设置IP ifconfig12$ ifconfig #查看IP$ ifconfig eth0(网卡设备) 192.168.1.2 #修改局域网IP 永久修改需要配置/etc/sysconfig/network-scripts/ifcfg-eth0,需要对应参数,修改前可以先启动setup编辑静态IP活的参数 网络服务管理service123456$ service network status #查看指定服务的状态$ service network stop #停止指定服务$ service network start #启动指定服务$ service network restart #重启指定服务$ service --status–all #查看系统中所有后台服务$ netstat –nltp #查看系统中网络进程的端口监听情况 防火墙设置 防火墙配置文件/etc/sysconfig/iptables 1234$ service iptables status 查看防火墙状态$ service iptables stop 关闭防火墙$ service iptables start 启动防火墙$ chkconfig iptables off 禁止防火墙自启]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Markdown 尖括号]]></title>
     <url>%2F2019%2F03%2F03%2FMarkdown-Angle-brackets%2F</url>
     <content type="text"><![CDATA[Markdown 尖括号 在markdown 中 &lt;&gt; 会被识别成html使用无法使用需要使用转义字符 例如 &lt;T&gt;]]></content>
@@ -127,6 +129,17 @@
       </categories>
       <tags>
         <tag>Markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Linux常用网络操作]]></title>
+    <url>%2F2019%2F03%2F03%2FLinux-network-cmd%2F</url>
+    <content type="text"><![CDATA[主机名配置[TOC] hostname12$ hostname #查看主机名$ hostname name.local #修改主机名 重启无效 永久修改需要配置/etc/sysconfig/network 123$ cat /etc/sysconfig/networkNETWORKING=yesHOSTNAME=localhost.localdomain IP配置setup1$ setup #建立 伪桌面程序 设置IP ifconfig12$ ifconfig #查看IP$ ifconfig eth0(网卡设备) 192.168.1.2 #修改局域网IP 永久修改需要配置/etc/sysconfig/network-scripts/ifcfg-eth0,需要对应参数,修改前可以先启动setup编辑静态IP活的参数 网络服务管理service123456$ service network status #查看指定服务的状态$ service network stop #停止指定服务$ service network start #启动指定服务$ service network restart #重启指定服务$ service --status–all #查看系统中所有后台服务$ netstat –nltp #查看系统中网络进程的端口监听情况 防火墙设置 防火墙配置文件/etc/sysconfig/iptables 1234$ service iptables status 查看防火墙状态$ service iptables stop 关闭防火墙$ service iptables start 启动防火墙$ chkconfig iptables off 禁止防火墙自启]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -139,6 +152,18 @@
       <tags>
         <tag>Linux</tag>
         <tag>Debian</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Redis for Java]]></title>
+    <url>%2F2019%2F03%2F02%2FRedis4Java%2F</url>
+    <content type="text"><![CDATA[Redis for JavaJedis Redis client for Java 要使用JedisJedis官网 1234Jedis jedis = new Jedis("localhost");jedis.auth("redis_password"); #设置验证密码jedis.set("foo","bar");String values = jedis.get("foo"); 可能遇到的问题远程服务器需要开启密码访问 或 关闭密码安全详情在Redis目录]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -171,18 +196,6 @@
         <category>Java</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Redis for Java]]></title>
-    <url>%2F2019%2F03%2F02%2FRedis4Java%2F</url>
-    <content type="text"><![CDATA[Redis for JavaJedis Redis client for Java 要使用JedisJedis官网 1234Jedis jedis = new Jedis("localhost");jedis.auth("redis_password"); #设置验证密码jedis.set("foo","bar");String values = jedis.get("foo"); 可能遇到的问题远程服务器需要开启密码访问 或 关闭密码安全详情在Redis目录]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Redis</tag>
         <tag>Java</tag>
       </tags>
   </entry>
