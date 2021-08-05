@@ -17,6 +17,38 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>VPS套WARP以MARK的方式</title>
+    <link href="https://ilpl.me/2021/08/15/WireGuard-mark/"/>
+    <id>https://ilpl.me/2021/08/15/WireGuard-mark/</id>
+    <published>2021-08-14T16:00:00.000Z</published>
+    <updated>2021-08-14T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>省略</p><h2 id="Wireguard"><a href="#Wireguard" class="headerlink" title="Wireguard"></a>Wireguard</h2><h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><h4 id="Wireguard-配置"><a href="#Wireguard-配置" class="headerlink" title="Wireguard 配置"></a>Wireguard 配置</h4><p>vim /etc/wireguard/wgcf.conf</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[Interface]</span><br><span class="line">PrivateKey = +F6Ed8Sr59ySYTn+J4gj</span><br><span class="line">Address = 172.16.0.2/32</span><br><span class="line">Address = fd01:5ca1:ab1e:8235:xxxx:xxxx:xxxx:xxxx/128</span><br><span class="line">#DNS = 8.8.8.8,2001:4860:4860::8888  # 注释使用系统DNS配置</span><br><span class="line">MTU = 1280</span><br><span class="line"></span><br><span class="line"># 关闭默认添加的配置,修改成添加通过mark来判断路由</span><br><span class="line">Table = off</span><br><span class="line">PostUp = ip rule add fwmark 22 table 100 ; ip route add 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule add fwmark 22 table 100 ; ip -6 route add ::/0 dev wgcf table 100</span><br><span class="line">PostDown = ip rule del fwmark 22 table 100 ; ip route del 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule del fwmark 22 table 100 ; ip -6 route del ::/0 dev wgcf table 100</span><br><span class="line"></span><br><span class="line">[Peer]</span><br><span class="line">PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=</span><br><span class="line">AllowedIPs = 0.0.0.0/0</span><br><span class="line">AllowedIPs = ::/0</span><br><span class="line">#Endpoint = engage.cloudflareclient.com:2408</span><br><span class="line">Endpoint = 162.159.192.3:2408</span><br></pre></td></tr></table></figure><h4 id="Proxy-配置"><a href="#Proxy-配置" class="headerlink" title="Proxy 配置"></a>Proxy 配置</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"protocol"</span>: <span class="string">"freedom"</span>,</span><br><span class="line">    <span class="attr">"settings"</span>: &#123;</span><br><span class="line">        //"domainStrategy": "UseIPv4"</span><br><span class="line">    &#125;,</span><br><span class="line">    "streamSettings": &#123;</span><br><span class="line">        "sockopt": &#123;</span><br><span class="line">            "mark": 22 // 跟上边相同的</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    "tag": "wgcf"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h2&gt;&lt;p&gt;省略&lt;/p&gt;
+&lt;h2 id=&quot;Wireguard&quot;&gt;&lt;a href=&quot;#Wireguard&quot; class=&quot;headerlink&quot; titl
+      
+    
+    </summary>
+    
+      <category term="Proxy" scheme="https://ilpl.me/categories/Proxy/"/>
+    
+    
+      <category term="Linux" scheme="https://ilpl.me/tags/Linux/"/>
+    
+      <category term="CloudFlare" scheme="https://ilpl.me/tags/CloudFlare/"/>
+    
+      <category term="WireGuard" scheme="https://ilpl.me/tags/WireGuard/"/>
+    
+      <category term="WARP" scheme="https://ilpl.me/tags/WARP/"/>
+    
+  </entry>
+  
+  <entry>
     <title>使用iptables过滤DNS污染/抢答</title>
     <link href="https://ilpl.me/2021/08/15/LInux-iptables-security-dns/"/>
     <id>https://ilpl.me/2021/08/15/LInux-iptables-security-dns/</id>
@@ -46,6 +78,8 @@
     
       <category term="iptables" scheme="https://ilpl.me/tags/iptables/"/>
     
+      <category term="OpenWRT" scheme="https://ilpl.me/tags/OpenWRT/"/>
+    
   </entry>
   
   <entry>
@@ -53,7 +87,7 @@
     <link href="https://ilpl.me/2020/03/07/Nginx-forward-all-path-to-websockset/"/>
     <id>https://ilpl.me/2020/03/07/Nginx-forward-all-path-to-websockset/</id>
     <published>2020-03-06T16:00:00.000Z</published>
-    <updated>2019-03-06T16:00:00.000Z</updated>
+    <updated>2020-03-06T16:00:00.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>我需要WebSocket/ws能接受任意路径并转发,并过滤请求不包含WebSocket的不做操作</p><blockquote><p>需要Nginx</p></blockquote><h3 id="WebSocket-接收任意路径请求"><a href="#WebSocket-接收任意路径请求" class="headerlink" title="WebSocket 接收任意路径请求"></a>WebSocket 接收任意路径请求</h3><blockquote><p>在 <code>Nginx</code>的<code>nginx.conf</code>配置添加以下然后重启即可</p></blockquote><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span><span class="regexp"> ^~</span> / &#123;</span><br><span class="line">    <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">    <span class="comment"># /ws修改为你的路径 </span></span><br><span class="line">    <span class="attribute">rewrite</span> <span class="regexp"> ^(.*)$</span>  /ws  <span class="literal">break</span>;</span><br><span class="line">    <span class="comment"># http://127.0.0.1:33684 修改为你的IP:PORT</span></span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:33684;</span><br><span class="line">    <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Connection <span class="string">"upgrade"</span>;</span><br><span class="line">    <span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="过滤非WebSocket的请求"><a href="#过滤非WebSocket的请求" class="headerlink" title="过滤非WebSocket的请求"></a>过滤非WebSocket的请求</h3><blockquote><p>在 <code>Nginx</code>的<code>nginx.conf</code>配置添加以下然后重启即可</p></blockquote><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span><span class="regexp"> ^~</span> / &#123;</span><br><span class="line"><span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line"><span class="attribute">if</span> (<span class="variable">$http_upgrade</span> != <span class="string">"websocket"</span>) &#123;</span><br><span class="line"><span class="comment">#root /data/wwwroot/default;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="attribute">if</span> (<span class="variable">$http_upgrade</span> = <span class="string">"websocket"</span>) &#123;</span><br><span class="line"><span class="comment"># /ws修改为你的路径 </span></span><br><span class="line"><span class="attribute">rewrite</span><span class="regexp"> ^(.*)$</span> /ws <span class="literal">break</span>;</span><br><span class="line"><span class="comment"># http://127.0.0.1:33684 修改为你的IP:PORT</span></span><br><span class="line"><span class="attribute">proxy_pass</span> http://127.0.0.1:33685;</span><br><span class="line">&#125;</span><br><span class="line"><span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span> Upgrade <span class="variable">$http_upgrade</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span> Connection <span class="string">"upgrade"</span>;</span><br><span class="line"><span class="attribute">proxy_set_header</span> Host <span class="variable">$http_host</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><blockquote><p>测试网站</p></blockquote><p><code>http://18.140.58.61/</code></p>]]></content>
     
@@ -306,32 +340,6 @@
   </entry>
   
   <entry>
-    <title>Markdown 尖括号</title>
-    <link href="https://ilpl.me/2019/03/03/Markdown-Angle-brackets/"/>
-    <id>https://ilpl.me/2019/03/03/Markdown-Angle-brackets/</id>
-    <published>2019-03-02T16:00:00.000Z</published>
-    <updated>2019-03-02T16:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="Markdown-尖括号"><a href="#Markdown-尖括号" class="headerlink" title="Markdown 尖括号"></a>Markdown 尖括号</h1><blockquote><p>在markdown 中 &lt;&gt; 会被识别成html使用无法使用需要使用转义字符</p></blockquote><p>例如 &lt;T&gt;</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;Markdown-尖括号&quot;&gt;&lt;a href=&quot;#Markdown-尖括号&quot; class=&quot;headerlink&quot; title=&quot;Markdown 尖括号&quot;&gt;&lt;/a&gt;Markdown 尖括号&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;在markdown 中 &amp;lt;&amp;
-      
-    
-    </summary>
-    
-      <category term="Markdown" scheme="https://ilpl.me/categories/Markdown/"/>
-    
-    
-      <category term="Markdown" scheme="https://ilpl.me/tags/Markdown/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Linux常用网络操作</title>
     <link href="https://ilpl.me/2019/03/03/Linux-network-cmd/"/>
     <id>https://ilpl.me/2019/03/03/Linux-network-cmd/</id>
@@ -386,29 +394,28 @@
   </entry>
   
   <entry>
-    <title>Redis for Java</title>
-    <link href="https://ilpl.me/2019/03/02/Redis4Java/"/>
-    <id>https://ilpl.me/2019/03/02/Redis4Java/</id>
-    <published>2019-03-01T16:00:00.000Z</published>
-    <updated>2019-03-01T16:00:00.000Z</updated>
+    <title>Markdown 尖括号</title>
+    <link href="https://ilpl.me/2019/03/03/Markdown-Angle-brackets/"/>
+    <id>https://ilpl.me/2019/03/03/Markdown-Angle-brackets/</id>
+    <published>2019-03-02T16:00:00.000Z</published>
+    <updated>2019-03-02T16:00:00.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Redis-for-Java"><a href="#Redis-for-Java" class="headerlink" title="Redis for Java"></a>Redis for Java</h1><h2 id="Jedis"><a href="#Jedis" class="headerlink" title="Jedis"></a>Jedis</h2><blockquote><p>Redis client for Java 要使用Jedis<br>Jedis<a href="https://github.com/xetorthio/jedis" target="_blank" rel="noopener">官网</a></p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"localhost"</span>);</span><br><span class="line">jedis.auth("redis_password"); #设置验证密码</span><br><span class="line">jedis.set(<span class="string">"foo"</span>,<span class="string">"bar"</span>);</span><br><span class="line">String values = jedis.get(<span class="string">"foo"</span>);</span><br></pre></td></tr></table></figure><h2 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h2><p>远程服务器需要开启密码访问 或 关闭密码安全详情在<code>Redis</code>目录</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="Markdown-尖括号"><a href="#Markdown-尖括号" class="headerlink" title="Markdown 尖括号"></a>Markdown 尖括号</h1><blockquote><p>在markdown 中 &lt;&gt; 会被识别成html使用无法使用需要使用转义字符</p></blockquote><p>例如 &lt;T&gt;</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;Redis-for-Java&quot;&gt;&lt;a href=&quot;#Redis-for-Java&quot; class=&quot;headerlink&quot; title=&quot;Redis for Java&quot;&gt;&lt;/a&gt;Redis for Java&lt;/h1&gt;&lt;h2 id=&quot;Jedis&quot;&gt;&lt;a href=&quot;#
+        &lt;h1 id=&quot;Markdown-尖括号&quot;&gt;&lt;a href=&quot;#Markdown-尖括号&quot; class=&quot;headerlink&quot; title=&quot;Markdown 尖括号&quot;&gt;&lt;/a&gt;Markdown 尖括号&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;在markdown 中 &amp;lt;&amp;
       
     
     </summary>
     
-      <category term="Java" scheme="https://ilpl.me/categories/Java/"/>
+      <category term="Markdown" scheme="https://ilpl.me/categories/Markdown/"/>
     
     
-      <category term="Redis" scheme="https://ilpl.me/tags/Redis/"/>
-    
-      <category term="Java" scheme="https://ilpl.me/tags/Java/"/>
+      <category term="Markdown" scheme="https://ilpl.me/tags/Markdown/"/>
     
   </entry>
   
@@ -438,27 +445,29 @@
   </entry>
   
   <entry>
-    <title>Redis 笔记</title>
-    <link href="https://ilpl.me/2019/03/02/Redis-use/"/>
-    <id>https://ilpl.me/2019/03/02/Redis-use/</id>
+    <title>Redis for Java</title>
+    <link href="https://ilpl.me/2019/03/02/Redis4Java/"/>
+    <id>https://ilpl.me/2019/03/02/Redis4Java/</id>
     <published>2019-03-01T16:00:00.000Z</published>
     <updated>2019-03-01T16:00:00.000Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="Redis概述"><a href="#Redis概述" class="headerlink" title="Redis概述"></a>Redis概述</h1><p><a href="https://redis.io/" target="_blank" rel="noopener">官网</a></p><h2 id="Redis介绍"><a href="#Redis介绍" class="headerlink" title="Redis介绍"></a>Redis介绍</h2><blockquote><p>Rrdis是开源的使用ANSI C语言编写支持网络 基于内存亦可持久化的日志型key-value数据库.</p></blockquote><h2 id="Redis-特点"><a href="#Redis-特点" class="headerlink" title="Redis 特点"></a>Redis 特点</h2><blockquote><p>Redis 与其他 key-value 缓存产品有有以下3个特点:</p><ol><li>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li><li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li><li>Redis支持数据的备份，即master-slave模式的数据备份。</li></ol></blockquote><h2 id="Redis-优势"><a href="#Redis-优势" class="headerlink" title="Redis 优势"></a>Redis 优势</h2><ol><li>性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。</li><li>丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。</li><li>原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。</li><li>丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。</li></ol><h1 id="Redis-下载与安装"><a href="#Redis-下载与安装" class="headerlink" title="Redis 下载与安装"></a>Redis 下载与安装</h1><p><a href="https://redis.io/download" target="_blank" rel="noopener">官网下载地址</a></p><h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ wget http://download.redis.io/releases/redis-5.0.3.tar.gz</span><br><span class="line">$ tar xzf redis-5.0.3.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> redis-5.0.3</span><br><span class="line">$ make</span><br><span class="line">$ make PREFIX=/usr/<span class="built_in">local</span>/redis install <span class="comment">#PREFIX 指定安装的目录 安装</span></span><br><span class="line">redis-server    <span class="comment">#redis服务器</span></span><br><span class="line">redis-cli       <span class="comment">#redis命令行客户端</span></span><br><span class="line">redis-benchmark <span class="comment">#redis性能测试工具</span></span><br><span class="line">redis-check-aof <span class="comment">#AOF文件修复工</span></span><br><span class="line">redis-check-rdb <span class="comment">#RDB文件检索工具</span></span><br><span class="line">$ cp redis.conf /usr/<span class="built_in">local</span>/redis <span class="comment">#复制配置文件</span></span><br></pre></td></tr></table></figure><p>注意要先预装<code>gcc</code></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install gcc <span class="comment">#Debian</span></span><br></pre></td></tr></table></figure><h2 id="配置redis"><a href="#配置redis" class="headerlink" title="配置redis"></a>配置redis</h2><p>一般会设置 redis.conf<br>编辑<code>/usr/local/redis</code>文件修改一下参数</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/<span class="built_in">local</span>/redis</span><br><span class="line"><span class="built_in">bind</span> 0.0.0.0 <span class="comment">#允许任何计算机访问</span></span><br><span class="line">port <span class="comment">#端口设置</span></span><br><span class="line">requirepass admin <span class="comment">#设置密码为admin</span></span><br><span class="line">protected-mode no <span class="comment">#无密码登录yes设置为no</span></span><br></pre></td></tr></table></figure><h2 id="redis-server-使用"><a href="#redis-server-使用" class="headerlink" title="redis-server 使用"></a>redis-server 使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-server reidis.config[config path]</span><br></pre></td></tr></table></figure><h2 id="redis-cli-使用"><a href="#redis-cli-使用" class="headerlink" title="redis-cli 使用"></a>redis-cli 使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-cli -h [host] -p [port] -a [password] </span><br><span class="line">$ ./redis-cli -h [host] -p [port] -a [password] [<span class="built_in">command</span>] <span class="comment">#交互式</span></span><br></pre></td></tr></table></figure><h1 id="Redis-数据类型和常见操作"><a href="#Redis-数据类型和常见操作" class="headerlink" title="Redis 数据类型和常见操作"></a>Redis 数据类型和常见操作</h1><p>支持的数据类型 <code>string</code>(字符串)  list<code>(链表)</code>set<code>(集合)</code>zset<code></code>sorted set<code>(有序集合)</code>hash`(哈希类型)</p><h1 id="Redis-for-Java-Client"><a href="#Redis-for-Java-Client" class="headerlink" title="Redis for Java Client"></a>Redis for Java Client</h1><p>在 JAVA 分类下</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="Redis-for-Java"><a href="#Redis-for-Java" class="headerlink" title="Redis for Java"></a>Redis for Java</h1><h2 id="Jedis"><a href="#Jedis" class="headerlink" title="Jedis"></a>Jedis</h2><blockquote><p>Redis client for Java 要使用Jedis<br>Jedis<a href="https://github.com/xetorthio/jedis" target="_blank" rel="noopener">官网</a></p></blockquote><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Jedis jedis = <span class="keyword">new</span> Jedis(<span class="string">"localhost"</span>);</span><br><span class="line">jedis.auth("redis_password"); #设置验证密码</span><br><span class="line">jedis.set(<span class="string">"foo"</span>,<span class="string">"bar"</span>);</span><br><span class="line">String values = jedis.get(<span class="string">"foo"</span>);</span><br></pre></td></tr></table></figure><h2 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h2><p>远程服务器需要开启密码访问 或 关闭密码安全详情在<code>Redis</code>目录</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;Redis概述&quot;&gt;&lt;a href=&quot;#Redis概述&quot; class=&quot;headerlink&quot; title=&quot;Redis概述&quot;&gt;&lt;/a&gt;Redis概述&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://redis.io/&quot; target=&quot;_blank&quot; rel=&quot;n
+        &lt;h1 id=&quot;Redis-for-Java&quot;&gt;&lt;a href=&quot;#Redis-for-Java&quot; class=&quot;headerlink&quot; title=&quot;Redis for Java&quot;&gt;&lt;/a&gt;Redis for Java&lt;/h1&gt;&lt;h2 id=&quot;Jedis&quot;&gt;&lt;a href=&quot;#
       
     
     </summary>
     
-      <category term="Redis" scheme="https://ilpl.me/categories/Redis/"/>
+      <category term="Java" scheme="https://ilpl.me/categories/Java/"/>
     
     
       <category term="Redis" scheme="https://ilpl.me/tags/Redis/"/>
+    
+      <category term="Java" scheme="https://ilpl.me/tags/Java/"/>
     
   </entry>
   
@@ -485,6 +494,31 @@
     
     
       <category term="Java" scheme="https://ilpl.me/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis 笔记</title>
+    <link href="https://ilpl.me/2019/03/02/Redis-use/"/>
+    <id>https://ilpl.me/2019/03/02/Redis-use/</id>
+    <published>2019-03-01T16:00:00.000Z</published>
+    <updated>2019-03-01T16:00:00.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Redis概述"><a href="#Redis概述" class="headerlink" title="Redis概述"></a>Redis概述</h1><p><a href="https://redis.io/" target="_blank" rel="noopener">官网</a></p><h2 id="Redis介绍"><a href="#Redis介绍" class="headerlink" title="Redis介绍"></a>Redis介绍</h2><blockquote><p>Rrdis是开源的使用ANSI C语言编写支持网络 基于内存亦可持久化的日志型key-value数据库.</p></blockquote><h2 id="Redis-特点"><a href="#Redis-特点" class="headerlink" title="Redis 特点"></a>Redis 特点</h2><blockquote><p>Redis 与其他 key-value 缓存产品有有以下3个特点:</p><ol><li>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li><li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li><li>Redis支持数据的备份，即master-slave模式的数据备份。</li></ol></blockquote><h2 id="Redis-优势"><a href="#Redis-优势" class="headerlink" title="Redis 优势"></a>Redis 优势</h2><ol><li>性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。</li><li>丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。</li><li>原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。</li><li>丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。</li></ol><h1 id="Redis-下载与安装"><a href="#Redis-下载与安装" class="headerlink" title="Redis 下载与安装"></a>Redis 下载与安装</h1><p><a href="https://redis.io/download" target="_blank" rel="noopener">官网下载地址</a></p><h2 id="下载安装"><a href="#下载安装" class="headerlink" title="下载安装"></a>下载安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ wget http://download.redis.io/releases/redis-5.0.3.tar.gz</span><br><span class="line">$ tar xzf redis-5.0.3.tar.gz</span><br><span class="line">$ <span class="built_in">cd</span> redis-5.0.3</span><br><span class="line">$ make</span><br><span class="line">$ make PREFIX=/usr/<span class="built_in">local</span>/redis install <span class="comment">#PREFIX 指定安装的目录 安装</span></span><br><span class="line">redis-server    <span class="comment">#redis服务器</span></span><br><span class="line">redis-cli       <span class="comment">#redis命令行客户端</span></span><br><span class="line">redis-benchmark <span class="comment">#redis性能测试工具</span></span><br><span class="line">redis-check-aof <span class="comment">#AOF文件修复工</span></span><br><span class="line">redis-check-rdb <span class="comment">#RDB文件检索工具</span></span><br><span class="line">$ cp redis.conf /usr/<span class="built_in">local</span>/redis <span class="comment">#复制配置文件</span></span><br></pre></td></tr></table></figure><p>注意要先预装<code>gcc</code></p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install gcc <span class="comment">#Debian</span></span><br></pre></td></tr></table></figure><h2 id="配置redis"><a href="#配置redis" class="headerlink" title="配置redis"></a>配置redis</h2><p>一般会设置 redis.conf<br>编辑<code>/usr/local/redis</code>文件修改一下参数</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ vi /usr/<span class="built_in">local</span>/redis</span><br><span class="line"><span class="built_in">bind</span> 0.0.0.0 <span class="comment">#允许任何计算机访问</span></span><br><span class="line">port <span class="comment">#端口设置</span></span><br><span class="line">requirepass admin <span class="comment">#设置密码为admin</span></span><br><span class="line">protected-mode no <span class="comment">#无密码登录yes设置为no</span></span><br></pre></td></tr></table></figure><h2 id="redis-server-使用"><a href="#redis-server-使用" class="headerlink" title="redis-server 使用"></a>redis-server 使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-server reidis.config[config path]</span><br></pre></td></tr></table></figure><h2 id="redis-cli-使用"><a href="#redis-cli-使用" class="headerlink" title="redis-cli 使用"></a>redis-cli 使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ./redis-cli -h [host] -p [port] -a [password] </span><br><span class="line">$ ./redis-cli -h [host] -p [port] -a [password] [<span class="built_in">command</span>] <span class="comment">#交互式</span></span><br></pre></td></tr></table></figure><h1 id="Redis-数据类型和常见操作"><a href="#Redis-数据类型和常见操作" class="headerlink" title="Redis 数据类型和常见操作"></a>Redis 数据类型和常见操作</h1><p>支持的数据类型 <code>string</code>(字符串)  list<code>(链表)</code>set<code>(集合)</code>zset<code></code>sorted set<code>(有序集合)</code>hash`(哈希类型)</p><h1 id="Redis-for-Java-Client"><a href="#Redis-for-Java-Client" class="headerlink" title="Redis for Java Client"></a>Redis for Java Client</h1><p>在 JAVA 分类下</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Redis概述&quot;&gt;&lt;a href=&quot;#Redis概述&quot; class=&quot;headerlink&quot; title=&quot;Redis概述&quot;&gt;&lt;/a&gt;Redis概述&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://redis.io/&quot; target=&quot;_blank&quot; rel=&quot;n
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://ilpl.me/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="https://ilpl.me/tags/Redis/"/>
     
   </entry>
   
@@ -539,39 +573,6 @@
     
     
       <category term="Linux" scheme="https://ilpl.me/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>非标准端口DNS(5353端口,UDP/TCP,港澳台)🔍</title>
-    <link href="https://ilpl.me/2018/08/17/public-DNS-5353-list/"/>
-    <id>https://ilpl.me/2018/08/17/public-DNS-5353-list/</id>
-    <published>2018-08-16T16:00:00.000Z</published>
-    <updated>2018-08-16T16:00:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>国内DNS查询海外域名总有点BUG😊<br>所以把平常使用的一些DNS 分享出来</p><blockquote><p>下方DNS均支持 53,5353(UDP/TCP)<br>使用非标准DNS能解决海外部分网站打不开的问题</p></blockquote><h2 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h2><h3 id="国内无污染DNS"><a href="#国内无污染DNS" class="headerlink" title="国内无污染DNS"></a>国内无污染DNS</h3><h4 id="中科大防污染DNS"><a href="#中科大防污染DNS" class="headerlink" title="中科大防污染DNS"></a>中科大防污染DNS</h4><p><code>202.141.162.123</code> 中国电信<br><code>202.38.93.153</code> 教育网<br><code>202.141.176.93</code> 中国移动</p><h3 id="海外公共DNS"><a href="#海外公共DNS" class="headerlink" title="海外公共DNS"></a>海外公共DNS</h3><h4 id="OpenDNS-推荐"><a href="#OpenDNS-推荐" class="headerlink" title="OpenDNS (推荐):"></a>OpenDNS (推荐):</h4><p>支持5353,443端口<br><code>208.67.222.222</code><br><code>208.67.220.220</code></p><h4 id="AdGuard-DNS"><a href="#AdGuard-DNS" class="headerlink" title="AdGuard DNS:"></a>AdGuard DNS:</h4><p>使用以下服务器拦截广告，跟踪和钓鱼<br><code>176.103.130.130</code><br><code>176.103.130.131</code><br><code>2a00:5a60::ad1:0ff</code><br><code>2a00:5a60::ad2:0ff</code></p><p>默认 + 拦截成人网站 + 安全搜索<br><code>176.103.130.132</code><br><code>176.103.130.134</code><br><code>2a00:5a60::bad1:0ff</code><br><code>2a00:5a60::bad2:0ff</code></p><h4 id="更多国家和地区-港澳台-部分支持5353"><a href="#更多国家和地区-港澳台-部分支持5353" class="headerlink" title="更多国家和地区(港澳台)(部分支持5353)"></a>更多国家和地区(港澳台)(部分支持5353)</h4><p>自取网站<br><code>https://dns.d0wn.biz/</code><br><code>https://dnscrypt.info/</code><br><code>https://www.publicdns.xyz/</code> (推荐)</p><h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p><code>208.67.222.222</code> 替换成你需要测试的域名<br><code>5353</code> 替换成你需要测试的端口</p><h4 id="DNS-TCP"><a href="#DNS-TCP" class="headerlink" title="DNS TCP"></a>DNS TCP</h4><p><code>Linux</code> 平台</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dig www.baidu.com @208.67.222.222 -p 5353 +tcp</span><br></pre></td></tr></table></figure><p><code>Windows</code> 平台<br>默认<code>nslookup</code>是只支持53端口,所以要先端口转发再进行DNS查询.要在管理员权限下进行.<br>自带端口转发只支持TCP,所以查询的都是TCP,UDP非53端口暂时我不知道怎么弄</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ netsh interface portproxy add v4tov4 listenaddress=0.0.0.0 listenport=53 connectaddress=208.67.222.222 connectport=5353</span><br><span class="line">$ nslookup -vc www.baidu.com 127.0.0.1</span><br></pre></td></tr></table></figure><p>使用完TCPDNS查询记得取消端口转发</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ netsh interface portproxy delete v4tov4 listenaddress=0.0.0.0 listenport=53</span><br></pre></td></tr></table></figure><h4 id="DNS-UDP"><a href="#DNS-UDP" class="headerlink" title="DNS UDP"></a>DNS UDP</h4><p><code>Linux</code> 平台</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ dig www.baidu.com @208.67.222.222 -p 5353</span><br></pre></td></tr></table></figure><p><code>Windows</code> 平台</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ nslookup www.baidu.com 208.67.222.222</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;国内DNS查询海外域名总有点BUG😊&lt;br&gt;所以把平常使用的一些DNS 分享出来&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;下方DNS均支持
-      
-    
-    </summary>
-    
-      <category term="DNS" scheme="https://ilpl.me/categories/DNS/"/>
-    
-    
-      <category term="DNS" scheme="https://ilpl.me/tags/DNS/"/>
-    
-      <category term="无污染DNS" scheme="https://ilpl.me/tags/%E6%97%A0%E6%B1%A1%E6%9F%93DNS/"/>
-    
-      <category term="5353" scheme="https://ilpl.me/tags/5353/"/>
-    
-      <category term="TCP DNS" scheme="https://ilpl.me/tags/TCP-DNS/"/>
     
   </entry>
   

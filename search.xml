@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[VPS套WARP以MARK的方式]]></title>
+    <url>%2F2021%2F08%2F15%2FWireGuard-mark%2F</url>
+    <content type="text"><![CDATA[安装省略 Wireguard配置Wireguard 配置vim /etc/wireguard/wgcf.conf 123456789101112131415161718[Interface]PrivateKey = +F6Ed8Sr59ySYTn+J4gjAddress = 172.16.0.2/32Address = fd01:5ca1:ab1e:8235:xxxx:xxxx:xxxx:xxxx/128#DNS = 8.8.8.8,2001:4860:4860::8888 # 注释使用系统DNS配置MTU = 1280# 关闭默认添加的配置,修改成添加通过mark来判断路由Table = offPostUp = ip rule add fwmark 22 table 100 ; ip route add 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule add fwmark 22 table 100 ; ip -6 route add ::/0 dev wgcf table 100PostDown = ip rule del fwmark 22 table 100 ; ip route del 0.0.0.0/0 dev wgcf table 100 ; ip -6 rule del fwmark 22 table 100 ; ip -6 route del ::/0 dev wgcf table 100[Peer]PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=AllowedIPs = 0.0.0.0/0AllowedIPs = ::/0#Endpoint = engage.cloudflareclient.com:2408Endpoint = 162.159.192.3:2408 Proxy 配置123456789101112&#123; "protocol": "freedom", "settings": &#123; //"domainStrategy": "UseIPv4" &#125;, "streamSettings": &#123; "sockopt": &#123; "mark": 22 // 跟上边相同的 &#125; &#125;, "tag": "wgcf"&#125;]]></content>
+      <categories>
+        <category>Proxy</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>CloudFlare</tag>
+        <tag>WireGuard</tag>
+        <tag>WARP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[使用iptables过滤DNS污染/抢答]]></title>
     <url>%2F2021%2F08%2F15%2FLInux-iptables-security-dns%2F</url>
     <content type="text"><![CDATA[前言DNS污染基于DNS抢答实现,那么只要过滤掉抢答的DNS就可以无污染. DNS支持的DNS 需要满足3个条件,只要过滤这个3个条件能百分百过滤掉抢答掉DNS IP ID = 0x0000 IP Flags = 0x00 DNS Authoritative = 0 全球DNS 推荐8.8.4.48.8.8.8 台湾DNS101.101.101.101101.102.103.104168.95.1.1168.95.192.1 香港DNS218.102.23.228210.0.255.251210.0.255.250 Linux NAT / Route 平台 12345678910111213141516171819$ ipset create dnsip hash:ip hashsize 64 maxelem 10 &gt;/dev/null 2&gt;&amp;1$ ipset add dnsip 8.8.4.4$ ipset add dnsip 8.8.8.8$ ipset add dnsip 168.95.1.1$ ipset add dnsip 168.95.192.1$ ipset add dnsip 101.101.101.101$ ipset add dnsip 101.102.103.104$ ipset add dnsip 218.102.23.228 # 網上行寬頻 Nevigator BroadBand DNS$ ipset add dnsip 210.0.255.250 # 和記環球電訊 DNS$ ipset add dnsip 210.0.255.251 # 和記環球電訊 DNS$ iptables -N DNS_FILTER$ iptables -F DNS_FILTER$ iptables -A DNS_FILTER -m u32 --u32 "2&amp;0xFFFF=0x0" -j DROP$ iptables -A DNS_FILTER -m u32 --u32 "4&amp;0xFFFF=0x4000" -j DROP$ iptables -A DNS_FILTER -m u32 --u32 "27&amp;0xFF=0x85" -j DROP$ iptables -t filter -I FORWARD -i "入口" -p udp --sport 53 -m set --match-set dnsip src -j DNS_FILTER$ # iptables -t nat -A PREROUTING -s 192.168.1.0/24 -p udp -m udp --dport 53 -m set ! --match-set dnsip dst -j DNAT --to-destination 192.168.1.1 Linux Local 平台 1$ iptables -t filter -A INPUT -i "入口" -p udp --sport 53 -m set --match-set dnsip src -j DNS_FILTER]]></content>
@@ -12,6 +26,7 @@
         <tag>无污染DNS</tag>
         <tag>53</tag>
         <tag>iptables</tag>
+        <tag>OpenWRT</tag>
       </tags>
   </entry>
   <entry>
@@ -122,17 +137,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Markdown 尖括号]]></title>
-    <url>%2F2019%2F03%2F03%2FMarkdown-Angle-brackets%2F</url>
-    <content type="text"><![CDATA[Markdown 尖括号 在markdown 中 &lt;&gt; 会被识别成html使用无法使用需要使用转义字符 例如 &lt;T&gt;]]></content>
-      <categories>
-        <category>Markdown</category>
-      </categories>
-      <tags>
-        <tag>Markdown</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[Linux常用网络操作]]></title>
     <url>%2F2019%2F03%2F03%2FLinux-network-cmd%2F</url>
     <content type="text"><![CDATA[主机名配置[TOC] hostname12$ hostname #查看主机名$ hostname name.local #修改主机名 重启无效 永久修改需要配置/etc/sysconfig/network 123$ cat /etc/sysconfig/networkNETWORKING=yesHOSTNAME=localhost.localdomain IP配置setup1$ setup #建立 伪桌面程序 设置IP ifconfig12$ ifconfig #查看IP$ ifconfig eth0(网卡设备) 192.168.1.2 #修改局域网IP 永久修改需要配置/etc/sysconfig/network-scripts/ifcfg-eth0,需要对应参数,修改前可以先启动setup编辑静态IP活的参数 网络服务管理service123456$ service network status #查看指定服务的状态$ service network stop #停止指定服务$ service network start #启动指定服务$ service network restart #重启指定服务$ service --status–all #查看系统中所有后台服务$ netstat –nltp #查看系统中网络进程的端口监听情况 防火墙设置 防火墙配置文件/etc/sysconfig/iptables 1234$ service iptables status 查看防火墙状态$ service iptables stop 关闭防火墙$ service iptables start 启动防火墙$ chkconfig iptables off 禁止防火墙自启]]></content>
@@ -156,15 +160,14 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Redis for Java]]></title>
-    <url>%2F2019%2F03%2F02%2FRedis4Java%2F</url>
-    <content type="text"><![CDATA[Redis for JavaJedis Redis client for Java 要使用JedisJedis官网 1234Jedis jedis = new Jedis("localhost");jedis.auth("redis_password"); #设置验证密码jedis.set("foo","bar");String values = jedis.get("foo"); 可能遇到的问题远程服务器需要开启密码访问 或 关闭密码安全详情在Redis目录]]></content>
+    <title><![CDATA[Markdown 尖括号]]></title>
+    <url>%2F2019%2F03%2F03%2FMarkdown-Angle-brackets%2F</url>
+    <content type="text"><![CDATA[Markdown 尖括号 在markdown 中 &lt;&gt; 会被识别成html使用无法使用需要使用转义字符 例如 &lt;T&gt;]]></content>
       <categories>
-        <category>Java</category>
+        <category>Markdown</category>
       </categories>
       <tags>
-        <tag>Redis</tag>
-        <tag>Java</tag>
+        <tag>Markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -179,14 +182,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Redis 笔记]]></title>
-    <url>%2F2019%2F03%2F02%2FRedis-use%2F</url>
-    <content type="text"><![CDATA[Redis概述官网 Redis介绍 Rrdis是开源的使用ANSI C语言编写支持网络 基于内存亦可持久化的日志型key-value数据库. Redis 特点 Redis 与其他 key-value 缓存产品有有以下3个特点: Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。 Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。 Redis支持数据的备份，即master-slave模式的数据备份。 Redis 优势 性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。 丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。 原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。 丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。 Redis 下载与安装官网下载地址 下载安装1234567891011$ wget http://download.redis.io/releases/redis-5.0.3.tar.gz$ tar xzf redis-5.0.3.tar.gz$ cd redis-5.0.3$ make$ make PREFIX=/usr/local/redis install #PREFIX 指定安装的目录 安装redis-server #redis服务器redis-cli #redis命令行客户端redis-benchmark #redis性能测试工具redis-check-aof #AOF文件修复工redis-check-rdb #RDB文件检索工具$ cp redis.conf /usr/local/redis #复制配置文件 注意要先预装gcc 1$ yum install gcc #Debian 配置redis一般会设置 redis.conf编辑/usr/local/redis文件修改一下参数 12345$ vi /usr/local/redisbind 0.0.0.0 #允许任何计算机访问port #端口设置requirepass admin #设置密码为adminprotected-mode no #无密码登录yes设置为no redis-server 使用1$ ./redis-server reidis.config[config path] redis-cli 使用12$ ./redis-cli -h [host] -p [port] -a [password] $ ./redis-cli -h [host] -p [port] -a [password] [command] #交互式 Redis 数据类型和常见操作支持的数据类型 string(字符串) list(链表)set(集合)zsetsorted set(有序集合)hash`(哈希类型) Redis for Java Client在 JAVA 分类下]]></content>
+    <title><![CDATA[Redis for Java]]></title>
+    <url>%2F2019%2F03%2F02%2FRedis4Java%2F</url>
+    <content type="text"><![CDATA[Redis for JavaJedis Redis client for Java 要使用JedisJedis官网 1234Jedis jedis = new Jedis("localhost");jedis.auth("redis_password"); #设置验证密码jedis.set("foo","bar");String values = jedis.get("foo"); 可能遇到的问题远程服务器需要开启密码访问 或 关闭密码安全详情在Redis目录]]></content>
       <categories>
-        <category>Redis</category>
+        <category>Java</category>
       </categories>
       <tags>
         <tag>Redis</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -198,6 +202,17 @@
       </categories>
       <tags>
         <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Redis 笔记]]></title>
+    <url>%2F2019%2F03%2F02%2FRedis-use%2F</url>
+    <content type="text"><![CDATA[Redis概述官网 Redis介绍 Rrdis是开源的使用ANSI C语言编写支持网络 基于内存亦可持久化的日志型key-value数据库. Redis 特点 Redis 与其他 key-value 缓存产品有有以下3个特点: Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。 Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。 Redis支持数据的备份，即master-slave模式的数据备份。 Redis 优势 性能极高 – Redis能读的速度是110000次/s,写的速度是81000次/s 。 丰富的数据类型 – Redis支持二进制案例的 Strings, Lists, Hashes, Sets 及 Ordered Sets 数据类型操作。 原子 – Redis的所有操作都是原子性的，同时Redis还支持对几个操作全并后的原子性执行。 丰富的特性 – Redis还支持 publish/subscribe, 通知, key 过期等等特性。 Redis 下载与安装官网下载地址 下载安装1234567891011$ wget http://download.redis.io/releases/redis-5.0.3.tar.gz$ tar xzf redis-5.0.3.tar.gz$ cd redis-5.0.3$ make$ make PREFIX=/usr/local/redis install #PREFIX 指定安装的目录 安装redis-server #redis服务器redis-cli #redis命令行客户端redis-benchmark #redis性能测试工具redis-check-aof #AOF文件修复工redis-check-rdb #RDB文件检索工具$ cp redis.conf /usr/local/redis #复制配置文件 注意要先预装gcc 1$ yum install gcc #Debian 配置redis一般会设置 redis.conf编辑/usr/local/redis文件修改一下参数 12345$ vi /usr/local/redisbind 0.0.0.0 #允许任何计算机访问port #端口设置requirepass admin #设置密码为adminprotected-mode no #无密码登录yes设置为no redis-server 使用1$ ./redis-server reidis.config[config path] redis-cli 使用12$ ./redis-cli -h [host] -p [port] -a [password] $ ./redis-cli -h [host] -p [port] -a [password] [command] #交互式 Redis 数据类型和常见操作支持的数据类型 string(字符串) list(链表)set(集合)zsetsorted set(有序集合)hash`(哈希类型) Redis for Java Client在 JAVA 分类下]]></content>
+      <categories>
+        <category>Redis</category>
+      </categories>
+      <tags>
+        <tag>Redis</tag>
       </tags>
   </entry>
   <entry>
